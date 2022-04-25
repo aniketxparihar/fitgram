@@ -36,7 +36,7 @@ const LandingPage = () => {
             Share Your Journey & Keep Growing
           </li>
         </ul>
-        <div className="cursor-pointer h-12 bg-violet-400 w-40 rounded-xl self-start ml-2 my-4 flex justify-center items-center text-xl text-white">
+        <div className="cursor-pointer h-12 bg-violet-400 w-40 rounded-xl self-start ml-2 my-4 flex justify-center items-center text-xl text-white hover:bg-violet-500">
           Get Started
         </div>
         <h5 className="landing__subheading text-2xl p-2 text-white text-left w-full">
@@ -45,7 +45,7 @@ const LandingPage = () => {
         </h5>
       </div>
       <div
-        className="landing__image__container"
+        className="landing__image__container shadow-2xl"
         style={{
           backgroundImage: `url(${landingPageImages[count]})`,
           backgroundRepeat: "no-repeat",
