@@ -1,0 +1,139 @@
+.landing__container {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  padding:6rem 0rem;
+  overflow:hidden;
+}
+.landing__image__container {
+  transition: 1s;
+  background-size: cover;
+  min-height: 40rem;
+  min-width: 30rem;
+  border-radius: 24px;
+  filter: hue-rotate(25);
+  position: relative;
+  margin-right:8rem;
+  box-shadow:0px 24px 38px 3px rgba(0,0,0,0.14) , 0px 9px 46px 8px rgba(0,0,0,0.12) , 0px 11px 15px -7px rgba(0,0,0,0.2)  ;
+  transform:rotate(8deg);
+}
+.landing__heading__container{
+    width:50%;
+    display: flex;flex-direction: column;
+    align-items: center;
+    margin-bottom:5rem;
+}
+
+.scattered__image__one,
+.scattered__image__two,
+.scattered__image__three,
+.scattered__image__four
+ {
+    height:8rem;
+    width:8rem;
+    position: absolute;
+    animation: spin 4s infinite;
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(720deg);
+  }
+}
+.landing__heading{
+    font-weight:bolder ;
+}
+.logo {
+    height:8rem;
+    width:8rem;
+}
+.scattered__image__one{
+    top:-2rem;
+    left:-5rem;
+}
+.scattered__image__two{
+    top:5rem;
+    right:-2rem;
+}
+.scattered__image__three{
+    bottom:8rem;
+    left:-2rem;
+}
+.scattered__image__four{
+    bottom:-2rem;
+    right:4rem;
+}
+.button{
+  box-shadow:0px 24px 38px 3px rgba(0,0,0,0.14) , 0px 9px 46px 8px rgba(0,0,0,0.12) , 0px 11px 15px -7px rgba(0,0,0,0.2)  ;
+
+}
+@media screen and (max-width: 1430px) {
+ 
+.landing__image__container {
+  
+  min-height: 35rem;
+  min-width: 25rem;
+  margin-right:0rem;
+}
+
+}
+@media screen and (max-width: 1033px) {
+    .landing__heading__container{
+    width:80%;
+    display: flex;flex-direction: column;
+    align-items: center;
+    margin-bottom:5rem;
+    
+}
+ .landing__container {
+     height:100%;
+  flex-direction: column;
+}
+.landing__image__container {
+  
+  min-height: 35rem;
+  min-width: 25rem;
+  margin-right:0rem;
+}
+.scattered__image__one{
+    top:-2rem;
+    left:-2rem;
+}
+.scattered__image__two{
+    top:2rem;
+    right:-2rem;
+}
+.scattered__image__three{
+    bottom:2rem;
+    left:-2rem;
+}
+.scattered__image__four{
+    bottom:-2rem;
+    right:2rem;
+}.scattered__image__one,
+.scattered__image__two,
+.scattered__image__three,
+.scattered__image__four
+ {
+    height:6rem;
+    width:6rem;
+    position: absolute;
+}
+}
+@media screen and (max-width: 500px) {
+    .landing__image__container {
+ 
+  transform:rotate(6deg);
+}
+
+  .landing__image__container {
+  
+  min-height: 35rem;
+  min-width: 70%;
+  margin-right:0rem;
+}
+}
