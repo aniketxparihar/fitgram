@@ -4,15 +4,15 @@ import { useTheme } from "../../../Context/Theme-Context";
 
 const Signup = () => {
   const { signupHandler } = useAuth();
-  const { themeObject } = useTheme();
+  const {themeObject} = useTheme();
   const signupReducerFunc = (state, action) => {
     switch (action.type) {
       case "FIRST_NAME":
         return { ...state, firstName: action.payload };
       case "LAST_NAME":
         return { ...state, lastName: action.payload };
-      case "EMAIL":
-        return { ...state, email: action.payload };
+      case "USERNAME":
+        return { ...state, username: action.payload };
       case "PASSWORD":
         return { ...state, password: action.payload };
       case "TERMS_AND_CONDITION":
@@ -23,19 +23,22 @@ const Signup = () => {
   const [state, dispatch] = useReducer(signupReducerFunc, {
     firstName: "",
     lastName: "",
-    email: "",
+    username: "",
     password: "",
     termsAndCondition: false,
   });
 
   return (
-    <div
-      className="signup__container"
-      style={{ backgroundColor: themeObject.primary }}
-    >
-      <div className="form__container">
+    <div className="signup__container">
+      <div
+        className="form__container"
+        style={{ backgroundColor: themeObject.primary }}
+      >
         <header className="heading" style={{ color: themeObject.text }}>
-          Signup
+          Signup {(state.termsAndCondition === false ||
+              state.fullName === "" ||
+              state.email === "" ||
+              state.password === "")?null:<span className="text-green-400 material-symbols-rounded">check_circle</span>}
         </header>
         <form
           onSubmit={(e) => {
@@ -43,7 +46,7 @@ const Signup = () => {
             signupHandler(
               state.firstName,
               state.lastName,
-              state.email,
+              state.username,
               state.password
             );
           }}
@@ -63,6 +66,7 @@ const Signup = () => {
               onChange={(e) =>
                 dispatch({ type: "FIRST_NAME", payload: e.target.value })
               }
+              style={{ color: themeObject.text }}
             />
           </div>
           <div className="last_name">
@@ -80,20 +84,22 @@ const Signup = () => {
               onChange={(e) =>
                 dispatch({ type: "LAST_NAME", payload: e.target.value })
               }
+              style={{ color: themeObject.text }}
             />
           </div>
           <div className="email">
             <label htmlFor="email__input" style={{ color: themeObject.text }}>
-              Email Address
+              Username
             </label>
             <input
-              type="email"
+              type="text"
               id="email__input"
               className="email__input txt-2xl "
-              value={state.email}
+              value={state.username}
               onChange={(e) =>
-                dispatch({ type: "EMAIL", payload: e.target.value })
+                dispatch({ type: "USERNAME", payload: e.target.value })
               }
+              style={{ color: themeObject.text }}
             />
           </div>
           <div className="password">
@@ -111,6 +117,7 @@ const Signup = () => {
               onChange={(e) =>
                 dispatch({ type: "PASSWORD", payload: e.target.value })
               }
+              style={{ color: themeObject.text }}
             />
           </div>
 
@@ -127,6 +134,7 @@ const Signup = () => {
                   })
                 }
                 checked={state.termsAndCondition}
+                style={{ color: themeObject.text }}
               />
               <label
                 htmlFor="termsAndCondition"
@@ -139,7 +147,7 @@ const Signup = () => {
           <input
             className="signup__button"
             type="submit"
-            value="create new account"
+            value="Create New Account"
             disabled={
               state.termsAndCondition === false ||
               state.fullName === "" ||

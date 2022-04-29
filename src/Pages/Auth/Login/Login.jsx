@@ -8,7 +8,7 @@ const Login = () => {
   const { themeObject } = useTheme();
   const loginReducerFunc = (state, action) => {
     switch (action.type) {
-      case "EMAIL":
+      case "USERNAME":
         return { ...state, email: action.payload };
       case "PASSWORD":
         return { ...state, password: action.payload };
@@ -18,19 +18,18 @@ const Login = () => {
   };
 
   const [state, dispatch] = useReducer(loginReducerFunc, {
-    email: "",
-    password: "",
-    rememberMe: false,
+    username: "test@1",
+    password: "test",
+    rememberMe: true,
   });
-  console.log(state);
   return (
-    <div
-      className="login__container"
-      style={{ backgroundColor: themeObject.primary }}
-    >
-      <div className="form__container">
+    <div className="login__container">
+      <div
+        className="form__container"
+        style={{ backgroundColor: themeObject.primary }}
+      >
         <header className="heading" style={{ color: themeObject.text }}>
-          Login
+          Login to Fitme
         </header>
         <form
           onSubmit={(e) => {
@@ -40,16 +39,17 @@ const Login = () => {
         >
           <div className="email">
             <label htmlFor="email__input" style={{ color: themeObject.text }}>
-              Email Address
+              Username
             </label>
             <input
               type="email"
               id="email__input"
-              className="email__input txt-2xl "
-              value={state.email}
+              className="email__input text-xl "
+              value={state.username}
               onChange={(e) =>
-                dispatch({ type: "EMAIL", payload: e.target.value })
+                dispatch({ type: "USERNAME", payload: e.target.value })
               }
+              style={{ color: themeObject.text }}
             />
           </div>
           <div className="password">
@@ -62,23 +62,29 @@ const Login = () => {
             <input
               type="password"
               id="password__input"
-              className="password__input txt-2xl"
+              className="password__input text-xl"
               value={state.password}
               onChange={(e) =>
                 dispatch({ type: "PASSWORD", payload: e.target.value })
               }
+              style={{ color: themeObject.text }}
             />
           </div>
           <div className="footer">
             <div className="rememberMe__container">
-              <input type="checkbox" id="rememberMe" className="rememberMe" />
+              <input
+                type="checkbox"
+                id="rememberMe"
+                className="rememberMe"
+                checked={state.rememberMe}
+                onChange={() => {
+                  dispatch({ type: "REMEMBER_ME" });
+                }}
+              />
               <label
                 htmlFor="rememberMe"
                 style={{ color: themeObject.text }}
-                checked={state.rememberMe}
-                onClick={() => {
-                  dispatch({ type: "REMEMBER_ME" });
-                }}
+                
               >
                 Remember Me
               </label>
@@ -91,7 +97,7 @@ const Login = () => {
           <input type="submit" className="login__button" value="Login" />
           <div className="noaccount" style={{ color: themeObject.text }}>
             Don't have an account?
-            <Link to="/signup" className="txt-4xl txt-yellow-400">
+            <Link to="/signup" className="text-2xl text-cyan-400">
               {" "}
               Signup
             </Link>

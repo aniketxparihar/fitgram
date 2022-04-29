@@ -20,11 +20,11 @@ const AuthProvider = (props) => {
         setUser(value);
     }
 
-    const loginHandler = async ({ email, password, rememberMe }) => {
+    const loginHandler = async ({ username, password, rememberMe }) => {
 
         try {
             const response = await axios.post("/api/auth/login", {
-                email,
+                username,
                 password
             });
             if (response.status === 200) {
@@ -40,12 +40,12 @@ const AuthProvider = (props) => {
 
     }
 
-    const signupHandler = async (firstName, lastName, email, password) => {
+    const signupHandler = async (firstName, lastName, username, password) => {
         try {
             const response = await axios.post("/api/auth/signup", {
                 firstName,
                 lastName,
-                email,
+                username,
                 password
             });
             if (response.status === 201) {
