@@ -1,11 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300&display=swap');
 body {
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-      sans-serif;
+    font-family: 'Hind Siliguri';
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -14,11 +13,195 @@ body {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
       monospace;
   }
-html{
+  html{
   font-size: 14px;
+  height:100vh;
 }
 @media screen and (max-width: 800px) {
 html{
   font-size:13px;
+  font-family: 'Hind Siliguri';
 }
+}
+:root{
+  --cta:var(--violet-500);
+  --light:#FFFFFF;
+  --dark:#001219;
+  --gray:var(--gray-400);
+  --primary:#38bdf8
+;
+}
+.bg-dark{
+  background-color: var(--dark);
+}
+.bg-light{
+  background-color: var(--light);
+}
+
+  /*Form CSS*/
+.signup__button,
+.login__button,
+.send__password__button {
+  border-radius: 8px;
+  border: none;
+  padding: 0.5rem;
+  outline: none;
+  background: none;
+  color: var(--main-black);
+  font-size: 2rem;
+  background-color: var(--primary);
+  transition: 1s;
+  cursor: pointer;
+  margin-top: 2rem;
+}
+
+.form__container {
+  width: max-content;
+  height: max-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  border-radius: 24px;
+  box-shadow: -0px 0px 20px 6px rgba(0, 0, 0, 0.4);
+}
+
+.heading {
+  font-size: 3rem;
+  padding: 1rem;
+  font-weight: 900;
+  color: var(--gray-300);
+}
+
+form {
+  width: 30rem;
+  height: max-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 4rem;
+  box-sizing: border-box;
+}
+
+.first_name,
+.last_name,
+.email,
+.password {
+  height: 4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  width: 100%;
+  margin-bottom: 2rem;
+}
+
+.footer {
+  width: 100%;
+  display: flex;
+  height: 6 rem;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.termsAndCondition__container {
+   display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.termsAndCondition {
+   margin: 0;
+  padding: 0;
+  position: relative;
+  margin-right: 8px;
+  top:2px;
+  width: 1.5rem;
+  height: 1.5rem;
+  cursor: pointer;
+}
+
+
+.email__input,
+.first_name__input,
+.last_name__input,
+.password__input {
+  width: 100%;
+  box-sizing: border-box;
+  height: 3rem;
+  outline: none;
+  border: 0;
+  border-bottom: 2px solid var(--primary);
+  background: none;
+  color: var(--gray-400);
+  text-align: left;
+}
+
+label {
+  font-size: 1.5rem;
+  color: var(--gray-300);
+}
+
+
+.rememberMe__container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.rememberMe {
+  margin: 0;
+  padding: 0;
+  position: relative;
+  margin-right: 8px;
+  width: 1.5rem;
+  height: 1.5rem;
+  cursor: pointer;
+}
+
+.forgotPassword {
+  margin-left: auto;
+  font-size: 1.5rem;
+  color: var(--primary);
+  cursor: pointer;
+}
+
+.login__container,
+.signup__container,
+.forgotpassword__container {
+  height: 100vh;
+  width:100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.send__password__button {
+  margin-top: 2rem;
+  border-radius: 8px;
+  border: none;
+  padding: .5rem;
+  outline: none;
+  background: none;
+  color: var(--main-black);
+  font-size: 2rem;
+  background-color: var(--primary);
+  transition: 1s;
+  cursor: pointer;
+}
+
+.noaccount {
+  text-align: center;
+  font-size: 1.5rem;
+  margin-top: 2rem;
+  color: var(--gray-300);
+}
+
+.login__container,.signup__container,.forgotpassword__container{
+  background-image: url("https://images.unsplash.com/photo-1517438322307-e67111335449?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1171&q=80");
+  background-size:cover;
+  background-repeat: no-repeat;
 }
