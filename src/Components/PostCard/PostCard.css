@@ -1,0 +1,25 @@
+.post-card__container{
+    width:40rem;
+    height:max-content;
+    
+}
+.media__container{
+    width: 100%;
+    display: flex;
+    justify-content:center;
+    align-items: center;
+
+}
+.media{
+    
+}
+.post-options{
+    width:100%;
+    display: flex;
+    justify-content: start;
+}
+.post-options span{
+    padding:1rem;
+    text-shadow: 0px 0px 4px;
+    cursor:pointer;
+}

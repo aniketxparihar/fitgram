@@ -1,0 +1,37 @@
+.home__profile__container{
+    display: flex;
+    width:25rem;
+    justify-content: center;
+    align-items: center;
+    overflow:hidden;
+    height:max-content;
+    position: relative;
+
+}
+.home__profile__data{
+    width:100%;
+    margin:2rem 0rem;
+    display:flex;
+    justify-content: space-evenly;
+}
+.home__profile__bio{
+    height:max-content;
+}
+.home__profile__followers,.home__profile__following{
+display: flex;
+flex-direction: column;
+justify-content: space-evenly;
+width:50%;
+
+}
+.home__profile__cover__image{
+    height:12rem;
+    width:100%;
+}
+.home__profile__display__picture{
+    position:absolute;
+    top:6rem;
+}
+.home__profile__name{
+margin-top:5rem;
+}

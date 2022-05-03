@@ -7,12 +7,14 @@ import AuthRoute from "./Components/AuthRoute/AuthRoute";
 import PrivateRoute from "./Components/PrivateRoute/PrivateRoute";
 import LandingPage from './Pages/LandingPage/LandingPage';
 import ForgotPassword from './Pages/Auth/FotgotPassword/ForgotPassword';
+import { Home } from './Pages/Home/Home';
 const Router = () => {
   return (
       <RoutesContainer>
           <Route path="/" element={<App />}>
-              <Route index element={<LandingPage />} />
+              <Route path="/landing" element={<LandingPage />} />
               <Route element={<PrivateRoute />}>
+                  <Route index path="/" element={<Home/>}/>
               </Route>
               <Route element={<AuthRoute />}>
                   <Route path="/login" element={<Login />} />

@@ -1,0 +1,23 @@
+.home__container{
+    height:100vh;
+    display:grid;
+    grid-template-columns: 3fr 5fr 4fr;
+    width:100%;
+    overflow: scroll;
+    overflow-x:hidden;
+}
+.home__right{
+     overflow: scroll;
+}
+.home__center{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: scroll;
+}
+.home__center::-webkit-scrollbar{
+    display: none;
+}
+.home__right::-webkit-scrollbar{
+    display: none;
+}
