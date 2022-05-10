@@ -13,18 +13,6 @@ const Drafts = () => {
        Drafted Posts
       </div>
       <PostCard />
-      <PostCard />
-      <PostCard />
-      <PostCard />
-      <PostCard />
-      <PostCard />
-      <PostCard />
-      <PostCard />
-      <PostCard />
-      <PostCard />
-      <PostCard />
-      <PostCard />
-      <PostCard />
     </div>
   );
 }

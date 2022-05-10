@@ -5,14 +5,6 @@ const ProfileLikedPosts = () => {
   return (
     <>
       <PostCard />
-      <PostCard />
-      <PostCard />
-      <PostCard />
-      <PostCard />
-      <PostCard />
-      <PostCard />
-      <PostCard />
-      <PostCard />
     </>
   );
 }

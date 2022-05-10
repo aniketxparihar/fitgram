@@ -14,11 +14,6 @@ const Media = () => {
         className="media-items rounded-3xl"
         alt=""
       />
-      <img
-        src="https://images.unsplash.com/photo-1590556409324-aa1d726e5c3c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
-        className="media-items rounded-3xl "
-        alt=""
-      />
      
     </div>
   );

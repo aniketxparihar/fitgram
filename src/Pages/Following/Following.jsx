@@ -5,25 +5,7 @@ const Following = () => {
   return (
     <div className="following__container flex items-center flex-col ">
       <ConnectUserCard />
-      <ConnectUserCard />
-      <ConnectUserCard />
-      <ConnectUserCard />
-      <ConnectUserCard />
-      <ConnectUserCard />
-      <ConnectUserCard />
-      <ConnectUserCard />
-      <ConnectUserCard />
-      <ConnectUserCard />
-      <ConnectUserCard />
-      <ConnectUserCard />
-      <ConnectUserCard />
-      <ConnectUserCard />
-      <ConnectUserCard />
-      <ConnectUserCard />
-      <ConnectUserCard />
-      <ConnectUserCard />
-      <ConnectUserCard />
-      <ConnectUserCard />
+    
     </div>
   );
 }

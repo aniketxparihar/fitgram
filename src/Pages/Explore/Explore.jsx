@@ -14,18 +14,6 @@ const Explore = () => {
          Explore Feed
        </div>
        <PostCard />
-       <PostCard />
-       <PostCard />
-       <PostCard />
-       <PostCard />
-       <PostCard />
-       <PostCard />
-       <PostCard />
-       <PostCard />
-       <PostCard />
-       <PostCard />
-       <PostCard />
-       <PostCard />
      </div>
    );
 }

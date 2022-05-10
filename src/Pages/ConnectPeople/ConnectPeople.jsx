@@ -8,18 +8,6 @@ const ConnectPeople = () => {
       <div className="flex flex-col items-center">
        <div className="connect-people__heading text-3xl font-bold m-8 " style={{color:themeObject.text}}>Connect</div>
       <ConnectUserCard />
-      <ConnectUserCard />
-      <ConnectUserCard />
-      <ConnectUserCard />
-      <ConnectUserCard />
-      <ConnectUserCard />
-      <ConnectUserCard />
-      <ConnectUserCard />
-      <ConnectUserCard />
-      <ConnectUserCard />
-      <ConnectUserCard />
-      <ConnectUserCard />
-      <ConnectUserCard />
     </div>
   );
 }
