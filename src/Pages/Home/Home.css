@@ -14,6 +14,7 @@
     flex-direction: column;
     align-items: center;
     overflow: scroll;
+    
 }
 .home__center::-webkit-scrollbar{
     display: none;

@@ -1,0 +1,21 @@
+.comments__container{
+    width:50rem;
+
+}
+.comments__input{
+    width:100%;
+    display: flex;
+}
+.comments__input--input{
+    flex-grow:1;
+}
+.comments{
+    width:100%;
+    justify-content: center;
+    align-items:start;
+    height:max-content;
+}
+.comments--comment{
+    text-align:left;
+    height:max-content;
+}

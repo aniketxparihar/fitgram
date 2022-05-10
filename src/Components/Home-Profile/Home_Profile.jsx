@@ -19,13 +19,13 @@ const Home_Profile = () => {
         className="home__profile__display__picture h-32 w-32 bg-gray-200 rounded-full m-8"
       />
       <div
-        className="home__profile__name text-3xl text-gray-200"
+        className="home__profile__name text-2xl text-gray-200"
         style={{ color: themeObject.text }}
       >
         John Doe
       </div>
       <div
-        className="home__profile__username text-xl text-gray-400"
+        className="home__profile__username text-l text-gray-400"
         style={{ color: themeObject.text }}
       >
         John@doe
@@ -37,7 +37,7 @@ const Home_Profile = () => {
         Aspernatur id deleniti quo.✨ 🌙
       </div>
 
-      <div className="home__profile__data flex justify-center border-t border-b  border-gray-400 ">
+      <div className="home__profile__data flex justify-center ">
         <div className="home__profile__followers  p-2  m-2 text-xl text-gray-500 font-bold border-r  border-gray-400 ">
           <div className="followers--count text-violet-500">200</div>
           Followers
@@ -47,7 +47,7 @@ const Home_Profile = () => {
           Following
         </div>
       </div>
-      <Link to="/profile" className="text-violet-600 mb-8 text-xl font-bold">
+      <Link to="/profile/" className="text-violet-600 mb-8 text-xl font-bold">
         My Profile
       </Link>
     </div>

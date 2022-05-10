@@ -16,12 +16,12 @@ const Search = () => {
       onMouseOver={() => setSelectBorder("border border-violet-400")}
       onMouseLeave={() => setSelectBorder("border border-transparent")}
     >
-      <span className="search__icon material-symbols-rounded text-violet-400">
+      <span className="search__icon material-symbols-rounded text-violet-400 ">
         search
       </span>
       <input
         type="text"
-        className="search rounded-full bg-transparent p-2 "
+        className="search rounded-full bg-transparent p-2 font-bold"
         placeholder="Search Fitme"
       />
     </div>

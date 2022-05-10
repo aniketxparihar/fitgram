@@ -1,0 +1,12 @@
+.connections__container{
+    width: 50rem;
+}
+.select-followers,.select-following{
+    flex-grow:1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.connections-select__container{
+    display: flex;
+}

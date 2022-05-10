@@ -1,0 +1,95 @@
+.edit-cancel{
+    width:max-content;
+    display: flex;
+    position: absolute;
+    top:0;
+    left:0;
+    z-index:12;
+    opacity:0.7;
+}
+.edit-modal__container{
+    position: absolute;
+    backdrop-filter: blur(2px);
+    width:100vw;
+    height:100vh;
+    display: flex;
+    justify-content: center;
+    z-index:10;
+}
+
+.edit-profile__container{
+    width:50rem;
+    height:max-content;
+    display:flex;
+    flex-direction: column;
+    justify-content:center;
+    align-items: center;
+    position: relative;
+}
+.edit-profile__cover__image{
+    height:20rem;
+    width:100%;filter: grayscale(60%);
+}
+.edit-profile__display__picture{
+filter: grayscale(60%);
+}
+.edit-profile__name{
+    width:100%;
+    text-align: start;
+}
+.edit-profile__username{
+    width:100%;
+    text-align: start;
+}
+.edit-profile__bio{
+    width:100%;
+    text-align:start;
+}
+.edit-profile__portfolio{
+ width:100%;
+    text-align:start;
+}
+.input__container
+{
+    width:90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: start;
+    padding:1rem;
+}
+.edit-profile__username,.edit-profile__name,.edit-profile__bio,.edit-profile__portfolio{
+    display: flex;
+    justify-content: start;
+    align-items: start;
+    outline:none;
+}
+.edit-cover-image{
+position:relative;
+height:20rem;
+width:100%;
+}
+.edit-display-picture{
+position:absolute;
+top:14rem;
+left:0rem;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+.image-input{
+    position: absolute;
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+    opacity:0;
+    z-index:11;
+}
+.edit-media{
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+    opacity:0.7;
+}

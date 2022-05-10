@@ -1,12 +1,13 @@
 import React from 'react'
 import Home_Profile from '../../Components/Home-Profile/Home_Profile';
 import YouMightLike from '../../Components/Home-YouMightLike/YouMightLike';
-import NewPost from '../../Components/NewPost/NewPost';
-import PostCard from '../../Components/PostCard/PostCard';
 import Search from '../../Components/Search/Search';
 import Sidebar from '../../Components/Sidebar/Sidebar';
 import { useTheme } from '../../Context/Theme-Context';
+import { Outlet } from 'react-router-dom';
 import "./Home.css";
+import NewPostModal from '../../Components/NewPostModal/NewPostModal';
+import EditProfileModal from '../../Components/EditProfileModal/EditProfileModal';
 export const Home = () => {
   const { themeObject } = useTheme();
   return (
@@ -18,11 +19,9 @@ export const Home = () => {
         <Sidebar />
       </div>
       <div className="home__center">
-        <NewPost />
-        <PostCard />
-        <PostCard />
-
-        <PostCard />
+        <Outlet />
+        <NewPostModal />
+        <EditProfileModal/>
       </div>
       <div className="home__right">
         <Search />
