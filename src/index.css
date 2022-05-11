@@ -14,7 +14,7 @@ body {
       monospace;
   }
   html{
-  font-size: 14px;
+  font-size: 13px;
   height:100vh;
 }
 @media screen and (max-width: 800px) {
@@ -28,7 +28,7 @@ html{
   --light:#FFFFFF;
   --dark:#001219;
   --gray:var(--gray-400);
-  --primary:#38bdf8
+  --primary:#9538f8;
 ;
 }
 .bg-dark{

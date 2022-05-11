@@ -1,0 +1,14 @@
+.connect-user-card__container{
+    width:30rem;
+    height:max-content;
+    display:flex;
+    justify-content: space-around;
+}
+.connect-user-card__heading{
+    margin-top:2rem;
+}
+.connect-user-card__profile{
+    width: 50rem;
+    display: flex;
+    flex-grow:1;
+}

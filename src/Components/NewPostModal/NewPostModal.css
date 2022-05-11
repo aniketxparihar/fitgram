@@ -1,0 +1,51 @@
+.modal__container{
+    position: absolute;
+    backdrop-filter: blur(2px);
+    width:100vw;
+    height:100vh;
+    display: flex;
+    justify-content: center;
+    z-index:10;
+}
+.new-post-modal__container{
+    height:max-content;
+    width:50rem;
+    background-color: #fff;
+    margin:2rem;
+}
+.display-picture{}
+.new-post-modal__wrapper{
+    width:100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: max-content;
+}
+.new-post-modal__input{
+    height: max-content;
+    flex-grow: 1;
+    padding:1.5rem;
+    outline:none;
+    overflow: block;
+}
+.new-post-modal__input::-webkit-scrollbar{
+    display: none;
+}
+.new-post-modal__options{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    margin:0rem 2rem 2rem 2rem;
+}
+.new-post-modal__options span{
+  padding:0.5rem;
+
+}
+.add-post{
+    margin-left:auto;
+     padding:0.8rem;
+}
+.cancel{
+    width:max-content;
+    display: flex;
+}

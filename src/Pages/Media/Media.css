@@ -1,0 +1,13 @@
+.media-items-container{
+    width:50rem;
+    height:max-content;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+}
+.media-items{
+    max-width: 50rem;
+    margin:2rem;
+    height: max-content;
+}
