@@ -17,7 +17,7 @@ export const deletePost = (postId, authToken) => axios.delete(`/api/posts/${post
         authorization: authToken,
     }
 });
-export const editPost = (postId,postData authToken) => axios.post(`/api/posts/${postId}`, {postData}, {
+export const editPost = (postId,postData, authToken) => axios.post(`/api/posts/${postId}`, {postData}, {
     headers: {
         authorization: authToken,
     }
