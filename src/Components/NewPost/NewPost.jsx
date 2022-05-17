@@ -1,8 +1,10 @@
 import React from 'react'
+import { useSelector } from 'react-redux';
 import { useTheme } from '../../Context/Theme-Context'
 import "./NewPost.css"
 const NewPost = () => {
   const { themeObject } = useTheme();
+  const { ownerData } = useSelector((store) => store.user);
   return (
     <div
       className="new-post__container rounded-3xl flex flex-col"
@@ -10,9 +12,9 @@ const NewPost = () => {
     >
       <div className="new-post__wrapper flex p-8">
         <img
-          className="display-picture h-16 w-16 rounded-full"
+          className="display-picture h-20 w-20 rounded-full"
           alt=""
-          src="https://images.unsplash.com/photo-1485528562718-2ae1c8419ae2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=858&q=80"
+          src={ownerData.profilePicture}
         />
         <textarea
           type="text"

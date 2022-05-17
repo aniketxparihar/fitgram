@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useEffect} from 'react'
 import Home_Profile from '../../Components/Home-Profile/Home_Profile';
 import YouMightLike from '../../Components/Home-YouMightLike/YouMightLike';
 import Search from '../../Components/Search/Search';
@@ -7,9 +7,31 @@ import { useTheme } from '../../Context/Theme-Context';
 import { Outlet } from 'react-router-dom';
 import "./Home.css";
 import NewPostModal from '../../Components/NewPostModal/NewPostModal';
-import EditProfileModal from '../../Components/EditProfileModal/EditProfileModal';
+import { useSelector, useDispatch } from 'react-redux';
+import { getAllUsers, getUser } from '../../services';
+import { getOwner } from '../../services/userService';
+import { changecurrentid } from '../../redux/UserSlice';
+
 export const Home = () => {
   const { themeObject } = useTheme();
+  const dispatch = useDispatch();
+  const { user} = useSelector((store) => store.auth);
+  const { currentId, userEdited } = useSelector((store) => store.user);
+  useEffect(() => {
+     dispatch(getOwner(user._id));
+  }, []);
+  useEffect(() => {
+    //on login the currentId will be equal to the owner Id
+    dispatch(changecurrentid(user._id));
+  }, []);
+  useEffect(() => {
+    // state will will store data of owner on
+    //load and will change with updated currentIds
+    dispatch(getUser(currentId));
+    dispatch(getAllUsers());
+  }, [currentId, userEdited]);
+ 
+  
   return (
     <div
       className="home__container"
@@ -21,7 +43,6 @@ export const Home = () => {
       <div className="home__center">
         <Outlet />
         <NewPostModal />
-        <EditProfileModal/>
       </div>
       <div className="home__right">
         <Search />

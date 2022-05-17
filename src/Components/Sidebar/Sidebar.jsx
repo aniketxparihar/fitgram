@@ -3,9 +3,14 @@ import "./Sidebar.css";
 import { Link } from 'react-router-dom'
 import { useTheme } from '../../Context/Theme-Context';
 import { useModal } from '../../Context/Modal-Context';
+import { logout } from '../../redux/AuthSlice';
+import { useDispatch,useSelector } from 'react-redux';
+import { changecurrentid } from '../../redux/UserSlice';
 const Sidebar = () => {
+  const { user } = useSelector((store) => store.auth)
+  const dispatch = useDispatch();
   const {  setModalNewPostVisible } = useModal();
-    const { themeObject, themeHandler, theme } = useTheme();
+  const { themeObject, themeHandler, theme } = useTheme();
   return (
     <div className="sidebar__container flex flex-col  ">
       <Link
@@ -59,7 +64,10 @@ const Sidebar = () => {
         <div className="sidebar__link--text">Drafts</div>
       </Link>
       <Link
-        to="profile/"
+        to={`${user.username}/`}
+        onClick={() => {
+          dispatch(changecurrentid(user._id))
+        }}
         className="sidebar__link text-left text-xl font-bold flex rounded-3xl"
         style={{
           color: themeObject.text,
@@ -70,7 +78,6 @@ const Sidebar = () => {
       </Link>
 
       <div
-        to="profile"
         className="sidebar__link text-left text-xl text-gray-50 font-bold flex rounded-3xl bg-violet-600 cursor-pointer w-52 h-14"
         onClick={() => setModalNewPostVisible("flex")}
       >
@@ -90,6 +97,16 @@ const Sidebar = () => {
         <span className="material-symbols-rounded ">
           {theme === "light" ? "light_mode" : "dark_mode"}
         </span>
+      </div>
+      <div
+        className="sidebar__link  text-left text-xl font-bold flex rounded-3xl cursor-pointer"
+        style={{
+          backgroundColor: themeObject.secondary,
+          color: themeObject.text,
+        }}
+        onClick={() => dispatch(logout())}
+      >
+        <span className="material-symbols-rounded ">logout</span>
       </div>
     </div>
   );
