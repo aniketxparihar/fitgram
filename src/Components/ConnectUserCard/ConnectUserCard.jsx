@@ -5,7 +5,7 @@ import { changecurrentid } from "../../redux/UserSlice";
 import {  useDispatch,useSelector } from 'react-redux';
 import "./ConnectUserCard.css"
 import { followUser,unfollowUser } from '../../services';
-import { getOwner } from '../../services/userService';
+import { getOwner,getUser } from '../../services/userService';
 const ConnectUserCard = ({userdata}) => {
   const { themeObject } = useTheme();
   const dispatch = useDispatch();
@@ -47,6 +47,7 @@ const ConnectUserCard = ({userdata}) => {
           ? unfollowUser(userdata?._id, authToken)
           : followUser(userdata?._id, authToken);
         dispatch(getOwner(user?._id));
+        dispatch(getUser(user?._id));
       }}>
         {ownerData?.following?.some((followingUser)=>followingUser?._id===userdata?._id)?"following":"follow"}
       </div>

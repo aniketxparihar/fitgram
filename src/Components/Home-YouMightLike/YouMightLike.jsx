@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { useTheme } from '../../Context/Theme-Context';
 import "./YouMightLike.css";
 import { followUser, unfollowUser } from '../../services';
-import { getOwner } from '../../services/userService';
+import { getOwner,getUser } from '../../services/userService';
 
 const YouMightLike = () => {
   const { themeObject } = useTheme();
@@ -64,6 +64,7 @@ const YouMightLike = () => {
                     ? unfollowUser(userdata?._id, authToken)
                     : followUser(userdata?._id, authToken);
                   dispatch(getOwner(user._id));
+                  dispatch(getUser(user._id));
                 }}
               >
                 {ownerData?.following?.some(

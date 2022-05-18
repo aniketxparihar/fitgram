@@ -17,18 +17,18 @@ export const loginHandler = createAsyncThunk("auth/login", async ({ username, pa
 }) 
 
 
-export const signupHandler = createAsyncThunk("auth/signup", async (firstName, lastName, username, password) => {
+export const signupHandler = createAsyncThunk("auth/signup", async ({username, password, firstName, lastName}) => {
+   
     try {
         const res = await axios.post("/api/auth/signup", {
+            username,
+            password,
             firstName,
             lastName,
-            username,
-            password
         });
-        return res;
+        return res.data;
     }
     catch (err) {
         console.log(err);
     }
-
 }) 

@@ -6,8 +6,8 @@ import { signupHandler } from "../../../services";
 const Signup = () => {
   const dispatch = useDispatch();
   const {themeObject} = useTheme();
-  const [firstname, setFirstname] = useState("");
-  const [lastname, setLastname] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [termsandcondition, setTermsandcondition] = useState(true);
@@ -24,11 +24,12 @@ const Signup = () => {
         <form
           onSubmit={(e) => {
             e.preventDefault();
+            console.log(username, password, firstName, lastName);
             dispatch(signupHandler(
-              {firstname,
-              lastname,
-              username,
-              password}
+              {username,
+              password,
+              firstName,
+              lastName}
             ))
           }}
         >
@@ -43,9 +44,9 @@ const Signup = () => {
               type="text"
               id="first_name__input"
               className="first_name__input txt-2xl"
-              value={firstname}
+              value={firstName}
               onChange={(e) =>
-                setFirstname(e.target.value)
+                setFirstName(e.target.value)
               }
               style={{ color: themeObject.text }}
             />
@@ -61,9 +62,9 @@ const Signup = () => {
               type="text"
               id="last_name__input"
               className="last_name__input txt-2xl"
-              value={lastname}
+              value={lastName}
               onChange={(e) =>
-                setLastname(e.target.value)
+                setLastName(e.target.value)
               }
               style={{ color: themeObject.text }}
             />
@@ -128,8 +129,8 @@ const Signup = () => {
             value="Create New Account"
             disabled={
               termsandcondition === false ||
-              firstname === "" ||
-              lastname === "" ||
+              firstName === "" ||
+              lastName === "" ||
               password === "" ||
               username===""
             }
