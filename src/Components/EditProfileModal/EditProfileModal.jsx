@@ -1,10 +1,20 @@
-import React from 'react'
+import React,{useState} from 'react'
 import "./EditProfileModal.css"
 import { useModal } from "../../Context/Modal-Context";
 import { useTheme } from "../../Context/Theme-Context";
-const EditProfileModal = () => {
-    const { themeObject } = useTheme();
-    const { modalEditProfileVisible, setEditProfileVisible } = useModal();
+import { editUser } from '../../services';
+import { useDispatch } from 'react-redux';
+import { useredited } from '../../redux/UserSlice';
+const EditProfileModal = ({userdata}) => {
+  const { themeObject } = useTheme();
+  const { modalEditProfileVisible, setModalEditProfileVisible } = useModal();
+  const [newFirstName, setNewFirstName] = useState(userdata?.firstName);
+  const [newLastName, setNewLastName] = useState(userdata?.lastName);
+  const [newUsername, setNewUsername] = useState(userdata?.username);
+  const [newBio, setNewBio] = useState(userdata?.bio);
+  const [newPortfolio, setNewPortfolio] = useState(userdata?.link);
+  const dispatch = useDispatch();
+  
   return (
     <div
       className="edit-modal__container"
@@ -20,7 +30,7 @@ const EditProfileModal = () => {
             backgroundColor: themeObject.primary,
             color: themeObject.text,
           }}
-          onClick={() => setEditProfileVisible("none")}
+          onClick={() => setModalEditProfileVisible("none")}
         >
           clear
         </span>
@@ -28,7 +38,7 @@ const EditProfileModal = () => {
         <div className="edit-cover-image rounded-t-3xl cursor-pointer">
           <input type="file" className="image-input cursor-pointer" />
           <img
-            src="https://images.unsplash.com/photo-1444090542259-0af8fa96557e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+            src={userdata?.coverPicture}
             alt=""
             className="edit-profile__cover__image rounded-t-3xl"
           />
@@ -39,9 +49,9 @@ const EditProfileModal = () => {
 
         <div className="edit-display-picture h-40 w-40 rounded-full m-6 cursor-pointer">
           <img
-            src="https://images.unsplash.com/photo-1485528562718-2ae1c8419ae2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=858&q=80"
+            src={userdata?.profilePicture}
             alt=""
-            className="edit-profile__display__picture h-40 w-40 rounded-full m-6"
+            className="edit-profile__display__picture  rounded-full m-6"
           />
           <input
             type="file"
@@ -55,6 +65,11 @@ const EditProfileModal = () => {
         <div
           style={{ color: themeObject.text }}
           className="edit-profile h-12 w-32 border border-gray-400 flex justify-center items-center rounded-3xl text-xl cursor-pointer"
+          onClick={() => {
+            editUser({...userdata,firstName:newFirstName,lastName:newLastName,username:newUsername,bio:newBio,link:newPortfolio},userdata._id)
+            setModalEditProfileVisible("none");
+            dispatch(useredited())
+          }}
         >
           Save
         </div>
@@ -68,7 +83,7 @@ const EditProfileModal = () => {
               color: themeObject.text,
             }}
           >
-            Name
+            First Name
           </label>
           <input
             id="edit-profile__name"
@@ -77,7 +92,32 @@ const EditProfileModal = () => {
               backgroundColor: themeObject.secondary,
               color: themeObject.text,
             }}
-            Value="John Doe"
+            value={newFirstName}
+            placeholder={userdata?.firstName}
+            onChange={(e) => setNewFirstName(e.target.value)}
+          />
+        </div>
+        <div className="input__container border  mb-4 rounded-xl">
+          <label
+            className="label"
+            htmlFor="edit-profile__name"
+            style={{
+              backgroundColor: themeObject.secondary,
+              color: themeObject.text,
+            }}
+          >
+            Last Name
+          </label>
+          <input
+            id="edit-profile__name"
+            className="edit-profile__name text-2xl h-12 "
+            style={{
+              backgroundColor: themeObject.secondary,
+              color: themeObject.text,
+            }}
+            value={newLastName}
+            placeholder={userdata?.lastName}
+            onChange={(e) => setNewLastName(e.target.value)}
           />
         </div>
         <div className="input__container border mb-4 rounded-xl">
@@ -98,7 +138,9 @@ const EditProfileModal = () => {
               color: themeObject.text,
             }}
             className="edit-profile__username text-2xl text-gray-400 h-12 rounded-xl"
-            Value="@Johndoe"
+            Value={newUsername}
+            placeholder={userdata?.username}
+            onChange={(e) => setNewUsername(e.target.value)}
           />
         </div>
         <div className="input__container border mb-4 rounded-xl">
@@ -119,7 +161,9 @@ const EditProfileModal = () => {
               backgroundColor: themeObject.secondary,
               color: themeObject.text,
             }}
-            value="Aspernatur id deleniti quo.✨ 🌙"
+            value={newBio}
+            placeholder={userdata?.bio}
+            onChange={(e) => setNewBio(e.target.value)}
           />
         </div>
         <div className="input__container border mb-8 rounded-xl">
@@ -140,7 +184,9 @@ const EditProfileModal = () => {
               color: themeObject.text,
             }}
             className="edit-profile__portfolio text-2xl text-gray-400 h-12 rounded-xl "
-            Value="portfolio website"
+            Value={newPortfolio}
+            placeholder={userdata?.link}
+            onChange={(e) => setNewPortfolio(e.target.value)}
           />
         </div>
       </div>

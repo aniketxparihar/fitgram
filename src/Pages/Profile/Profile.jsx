@@ -1,71 +1,83 @@
-import React, { useState } from 'react';
-import "./Profile.css"
-import { useTheme } from '../../Context/Theme-Context';
-import { Link, NavLink, Outlet } from 'react-router-dom';
-import PostCard from '../../Components/PostCard/PostCard';
-import { useModal } from '../../Context/Modal-Context';
+import React, { useState, useEffect } from "react";
+import "./Profile.css";
+import { useTheme } from "../../Context/Theme-Context";
+import { Link, NavLink, Outlet } from "react-router-dom";
+import { useModal } from "../../Context/Modal-Context";
+import { useDispatch, useSelector } from "react-redux";
+import EditProfileModal from "../../Components/EditProfileModal/EditProfileModal";
+import { followUser, unfollowUser,getOwner } from "../../services";
+
 const Profile = () => {
-    const { themeObject } = useTheme();
-  const { setEditProfileVisible } = useModal();
-  const [userAccount, setUserAccount] = useState(false);
-  const [following, setFollowing] = useState(true);
+  const dispatch = useDispatch();
+  const { userdata, ownerData,currentId } = useSelector((store) => store.user);
+  const { user, authToken } = useSelector((store) => store.auth);
+  
+  
+  const { themeObject } = useTheme();
+  const { setModalEditProfileVisible } = useModal();
+
   return (
     <>
+      <EditProfileModal userdata={userdata} />
       <div
         className="profile__container mt-8 mb-8 rounded-3xl"
         style={{ backgroundColor: themeObject.secondary }}
       >
         <img
-          src="https://images.unsplash.com/photo-1444090542259-0af8fa96557e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+          src={userdata?.coverPicture}
           alt=""
           className="profile__cover__image rounded-t-3xl"
         />
         <img
-          src="https://images.unsplash.com/photo-1485528562718-2ae1c8419ae2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=858&q=80"
+          src={userdata?.profilePicture}
           className="profile__display__picture h-40 w-40 rounded-full m-6"
         />
-        {userAccount?null:<div
-          style={{ color: themeObject.text }}
-          className="edit-profile h-12 w-32 border border-gray-400 flex justify-center items-center rounded-3xl text-xl cursor-pointer"
-          onClick={() => setEditProfileVisible("flex")}
-        >
-          Edit Profile
-        </div>}
-        {userAccount?<div
-          style={following?{}:{color: themeObject.text }}
-          className={`edit-profile h-12 w-32 border border-gray-400 flex justify-center items-center rounded-3xl text-xl cursor-pointer ${following?"bg-violet-700 text-gray-50 font-bold":null}`}
-          onClick={() => {  setFollowing(!following)}}
-        >
-          {following?"Following":"Follow"}
-        </div>:null}
+        
+        {user._id !== userdata._id? (
+          <div
+            style={ownerData?.following?.some((followingUser) => followingUser?._id === userdata?._id) ? {} : { color: themeObject.text }}
+            className={`edit-profile h-12 w-32 border border-gray-400 flex justify-center items-center rounded-3xl text-xl cursor-pointer ${ownerData?.following?.some((followingUser) => followingUser?._id === userdata?._id) ? "bg-violet-700 text-gray-50 font-bold" : null}`}
+            onClick={() =>{  ownerData?.following?.some((followingUser) => followingUser?._id === userdata?._id) ? unfollowUser(userdata?._id, authToken) : followUser(userdata?._id, authToken); dispatch(getOwner(user._id)) }}>
+           {ownerData?.following?.some((followingUser) => followingUser?._id === userdata?._id)? "following": "follow"}
+          </div>
+
+        ) : <div
+            style={{ color: themeObject.text }}
+            className="edit-profile h-12 w-32 border border-gray-400 flex justify-center items-center rounded-3xl text-xl cursor-pointer"
+            onClick={() => setModalEditProfileVisible("flex")}
+          >
+            Edit Profile
+          </div>}
 
         <div
           className="profile__name text-4xl ml-12"
           style={{ color: themeObject.text }}
         >
-          John Doe
+          {userdata?.firstName} {userdata?.lastName}
         </div>
         <div className="profile__username text-2xl text-gray-400 ml-12">
-          @Johndoe
+          {userdata?.username}
         </div>
         <div
           className="profile__bio  mt-8 ml-12 text-2xl"
           style={{ color: themeObject.text }}
         >
-          Aspernatur id deleniti quo.✨ 🌙
+          {userdata?.bio}
         </div>
         <a
-          href=""
+          href={userdata?.link}
           className="profile__username text-2xl text-purple-600 ml-12 font-bold"
         >
-          Johndoe.com
+          {userdata?.link}
         </a>
         <div className="profile__data flex justify-center ml-12 mt-8 mb-8">
           <Link
             to="/connections/followers"
             className="profile__followers   text-xl text-gray-500 font-bold flex"
           >
-            <div className="followers--count text-violet-500 mr-2">200</div>
+            <div className="followers--count text-violet-500 mr-2">
+              {userdata?.followers?.length}
+            </div>
             Followers
           </Link>
 
@@ -73,20 +85,22 @@ const Profile = () => {
             to="/connections/following"
             className="profile__following  text-xl text-gray-500 font-bold flex ml-8"
           >
-            <div className="following--count text-violet-500 mr-2">200</div>
+            <div className="following--count text-violet-500 mr-2">
+              {userdata?.following?.length}
+            </div>
             Following
           </Link>
-          <div
+          {/* <div
             to="/connections/following"
             className="profile__posts  text-xl text-gray-500 font-bold flex ml-8"
           >
             <div className="post--count text-violet-500 mr-2">200</div>
             Posts
-          </div>
+          </div> */}
         </div>
         <div className="user-data ml-8  rounded-b-3xl">
           <NavLink
-            to="/profile/"
+            to={`/${userdata?.username}/`}
             className="posts text-2xl hover:bg-sky-500 cursor-pointer font-bold rounded-bl-3xl "
             style={({ isActive }) => ({
               backgroundColor: isActive ? "#8b5cf6" : "transparent",
@@ -96,7 +110,7 @@ const Profile = () => {
             Posts
           </NavLink>
           <NavLink
-            to="/profile/media"
+            to={`/${userdata?.username}/media`}
             className="media text-2xl hover:bg-sky-500 cursor-pointer font-bold "
             style={({ isActive }) => ({
               backgroundColor: isActive ? "#8b5cf6" : "transparent",
@@ -106,7 +120,7 @@ const Profile = () => {
             Media
           </NavLink>
           <NavLink
-            to="/profile/liked"
+            to={`/${userdata?.username}/liked`}
             className="likes text-2xl hover:bg-sky-500 cursor-pointer font-bold rounded-br-3xl"
             style={({ isActive }) => ({
               backgroundColor: isActive ? "#8b5cf6" : "transparent",
@@ -120,6 +134,6 @@ const Profile = () => {
       <Outlet />
     </>
   );
-}
+};
 
-export default Profile
+export default Profile;

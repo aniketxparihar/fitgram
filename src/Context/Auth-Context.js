@@ -3,12 +3,12 @@ import axios from "axios";
 const defaultValue = {};
 const AuthContext = createContext(defaultValue);
 const AuthProvider = (props) => {
-    useEffect(() => {
-        if (localStorage.getItem("user") !== null) {
-            tokenHandler(JSON.parse(localStorage.getItem("user")).encodedToken);
-            userHandler(JSON.parse(localStorage.getItem("user")).user)
-        }
-    }, []);
+    // useEffect(() => {
+    //     if (localStorage.getItem("user") !== null) {
+    //         tokenHandler(JSON.parse(localStorage.getItem("token")));
+    //         userHandler(JSON.parse(localStorage.getItem("user")))
+    //     }
+    // }, []);
 
     const [authToken, setAuthToken] = useState("");
     const [user, setUser] = useState({});

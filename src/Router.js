@@ -42,10 +42,10 @@ const Router = () => {
                           <Route path="/connections/followers" element={<Followers />} />
                       </Route>
                       <Route path="/following" element={<Following />} />
-                      <Route path="/profile" element={<Profile />} >
+                      <Route path="/:username" element={<Profile />} >
                           <Route index  element={<ProfilePosts />} />
-                          <Route path="/profile/media" element={<Media />} />
-                          <Route path="/profile/liked" element={<ProfileLikedPosts/>} />
+                          <Route path="/:username/media" element={<Media />} />
+                          <Route path="/:username/liked" element={<ProfileLikedPosts/>} />
                       </Route>
                       <Route path="/bookmarks" element={<Profile />} />
                   </Route>

@@ -1,27 +1,17 @@
-import React, { useReducer, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useAuth } from "../../../Context/Auth-Context";
 import { useTheme } from "../../../Context/Theme-Context";
-
+import {useDispatch } from "react-redux";
+import { loginHandler } from "../../../services";
 const Login = () => {
-  const { loginHandler } = useAuth();
-  const { themeObject } = useTheme();
-  const loginReducerFunc = (state, action) => {
-    switch (action.type) {
-      case "USERNAME":
-        return { ...state, email: action.payload };
-      case "PASSWORD":
-        return { ...state, password: action.payload };
-      case "REMEMBER_ME":
-        return { ...state, rememberMe: !state.rememberMe };
-    }
-  };
+  
 
-  const [state, dispatch] = useReducer(loginReducerFunc, {
-    username: "test@1",
-    password: "test",
-    rememberMe: true,
-  });
+  const dispatch = useDispatch();
+  const { themeObject } = useTheme();
+  const [username, setUsername] = useState("test@1");
+  const [password, setPassword] = useState("test");
+  const [rememberme, setRememberme] = useState(true);
+
   return (
     <div className="login__container">
       <div
@@ -34,7 +24,7 @@ const Login = () => {
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            loginHandler(state);
+            dispatch(loginHandler({username,password,rememberme}));
           }}
         >
           <div className="email">
@@ -45,9 +35,9 @@ const Login = () => {
               type="email"
               id="email__input"
               className="email__input text-xl "
-              value={state.username}
+              value={username}
               onChange={(e) =>
-                dispatch({ type: "USERNAME", payload: e.target.value })
+                setUsername(e.target.value)
               }
               style={{ color: themeObject.text }}
             />
@@ -63,9 +53,8 @@ const Login = () => {
               type="password"
               id="password__input"
               className="password__input text-xl"
-              value={state.password}
-              onChange={(e) =>
-                dispatch({ type: "PASSWORD", payload: e.target.value })
+              value={password}
+              onChange={(e) =>setPassword(e.target.value)
               }
               style={{ color: themeObject.text }}
             />
@@ -76,9 +65,9 @@ const Login = () => {
                 type="checkbox"
                 id="rememberMe"
                 className="rememberMe"
-                checked={state.rememberMe}
+                checked={rememberme}
                 onChange={() => {
-                  dispatch({ type: "REMEMBER_ME" });
+                  setRememberme(!rememberme)
                 }}
               />
               <label
