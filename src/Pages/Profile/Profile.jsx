@@ -33,7 +33,7 @@ const Profile = () => {
           className="profile__display__picture h-40 w-40 rounded-full m-6"
         />
         
-        {user._id !== userdata._id? (
+        {user?._id !== userdata?._id? (
           <div
             style={ownerData?.following?.some((followingUser) => followingUser?._id === userdata?._id) ? {} : { color: themeObject.text }}
             className={`edit-profile h-12 w-32 border border-gray-400 flex justify-center items-center rounded-3xl text-xl cursor-pointer ${ownerData?.following?.some((followingUser) => followingUser?._id === userdata?._id) ? "bg-violet-700 text-gray-50 font-bold" : null}`}

@@ -8,22 +8,25 @@ import { Outlet } from 'react-router-dom';
 import "./Home.css";
 import NewPostModal from '../../Components/NewPostModal/NewPostModal';
 import { useSelector, useDispatch } from 'react-redux';
-import { getAllUsers, getUser } from '../../services';
-import { getOwner } from '../../services/userService';
+import { getAllUsers, getUser, getOwner, getAllPosts } from "../../services";
+//slices
 import { changecurrentid } from '../../redux/UserSlice';
 
 export const Home = () => {
   const { themeObject } = useTheme();
   const dispatch = useDispatch();
+  //state values
   const { user} = useSelector((store) => store.auth);
   const { currentId, userEdited } = useSelector((store) => store.user);
+  const { homefeed } = useSelector((store) => store.post);
+
   useEffect(() => {
-     dispatch(getOwner(user._id));
-  }, []);
-  useEffect(() => {
+    dispatch(getOwner(user._id));
     //on login the currentId will be equal to the owner Id
     dispatch(changecurrentid(user._id));
+    dispatch(getAllPosts())
   }, []);
+  
   useEffect(() => {
     // state will will store data of owner on
     //load and will change with updated currentIds
@@ -42,6 +45,7 @@ export const Home = () => {
       </div>
       <div className="home__center">
         <Outlet />
+       
         <NewPostModal />
       </div>
       <div className="home__right">

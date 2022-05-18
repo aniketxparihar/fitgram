@@ -1,22 +1,37 @@
-import React from 'react'
-import { useTheme } from '../../Context/Theme-Context';
-import "./Media.css"
+import React from "react";
+import { useState } from "react";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { useTheme } from "../../Context/Theme-Context";
+import { getAllPostsFromUsername } from "../../services";
+import "./Media.css";
 const Media = () => {
-    const { themeObject } = useTheme();
+  const { themeObject } = useTheme();
+  const { userdata, ownerData } = useSelector((store) => store.user);
+  const [userPosts, setUserPosts] = useState([]);
+  useEffect(() => {
+    (async () => {
+      const res = await getAllPostsFromUsername(userdata?.username);
+      setUserPosts(res.data.posts);
+    })();
+  }, [userdata]);
   return (
     <div
-      className="media-items-container rounded-3xl"
+      className="media-items-container rounded-3xl "
       style={{ backgroundColor: themeObject.secondary }}
     >
+      {userPosts.map((post) => {
+        return (
+          <img
+            src={post.media}
+            className="media-items rounded-3xl"
+            alt=""
+          />
+        );
+      })}
       
-      <img
-        src="https://images.unsplash.com/photo-1490371475955-4cb3bfc72f71?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1176&q=80"
-        className="media-items rounded-3xl"
-        alt=""
-      />
-     
     </div>
   );
-}
+};
 
-export default Media
+export default Media;
