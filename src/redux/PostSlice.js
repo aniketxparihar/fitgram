@@ -1,18 +1,24 @@
 import { createSlice} from "@reduxjs/toolkit";
-import { getAllPosts } from "../services";
+import { getAllPosts, getBookmarks } from "../services";
 
 const postSlice = createSlice({
     name: "user",
     initialState: {
         homefeed: [],
+        explorefeed: [],
+        bookmarked:[]
     },
     reducers: {
     
     },
     extraReducers: {
         [getAllPosts.fulfilled]: (state, action) => {
-            state.homefeed = action.payload;
-      }
+            state.homefeed = JSON.parse(JSON.stringify(action.payload));
+            state.explorefeed = action.payload;
+        },
+        [getBookmarks.fulfilled]: (state, action) => {
+            state.bookmarked = action.payload;
+        }
     }
 })
 export const {  } = postSlice.actions;

@@ -1,7 +1,10 @@
 import React from 'react'
+import { useSelector } from 'react-redux';
 import { useTheme } from '../../Context/Theme-Context';
-const CommentCard = () => {
-    const { themeObject } = useTheme();
+import { downvoteComment, upvoteComment } from '../../services';
+const CommentCard = ({ comment }) => {
+  const { themeObject } = useTheme();
+  const { authToken } = useSelector((store) => store.auth);
   return (
     <div
       className="comments flex flex-col p-8  mt-8 mb-8 rounded-3xl"
@@ -9,36 +12,59 @@ const CommentCard = () => {
     >
       <div className="flex mb-2">
         <img
+          alt=""
           className="comments--display-picture h-14 w-14 rounded-full mr-8"
-          src="https://images.unsplash.com/photo-1485528562718-2ae1c8419ae2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=858&q=80"
+          src={comment?.profilePicture}
         />
-        <div className="flex flex-col justify-center">
-          <div className="flex ">
+        <div className="flex flex-col">
+          <div className="flex justify-start">
             <div
               className="comments--commenter-name mr-2 font-bold text-xl"
               style={{ color: themeObject.text }}
             >
-              Jack Doe
+              {comment?.firstName} {comment?.lastName}
             </div>
             <div
-              className="comments--commenter-username text-xl"
+              className="comments--commenter-username text-xl "
               style={{ color: themeObject.text }}
             >
-              @jackdoe
+              @{comment?.username}
             </div>
           </div>
-          <div className="comments--post-owner-name text-violet-500 font-bold text-xl">
-            Replying to @johndoe
+          <div className="comments--post-owner-name text-violet-500 font-bold text-xl text-left">
+            Replying to @{comment?.postUsername}
           </div>
         </div>
       </div>
       <div
         className="comments--comment font-bold text-xl ml-20 p-2"
-        style={{ color: themeObject.text }}>
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptatibus
-        dicta voluptates debitis tenetur sint eaque, eum aliquam laudantium
-              voluptatum sequi.
-              Lorem100
+        style={{ color: themeObject.text }}
+      >
+        {comment?.content}
+      </div>
+      <div className="flex m-8  items-center">
+        <span
+          className="material-symbols-rounded mr-2"
+          onClick={() =>upvoteComment(comment?.postId, comment?._id, authToken)
+          }
+          style={{ color: themeObject.text }}
+        >
+          thumb_up
+        </span>
+        <div className="text-xl mr-8" style={{ color: themeObject.text }}>
+          {comment?.votes?.upvotedBy?.length}
+        </div>
+        <span
+          className="material-symbols-rounded mr-2"
+          onClick={() =>downvoteComment(comment?.postId, comment?._id, authToken)
+          }
+          style={{ color: themeObject.text }}
+        >
+          thumb_down
+        </span>
+        <div className=" text-xl mr-8" style={{ color: themeObject.text }}>
+          {comment?.votes?.downvotedBy?.length}
+        </div>
       </div>
     </div>
   );

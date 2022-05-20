@@ -8,10 +8,9 @@ import { getAllPosts } from '../../services';
 const ProfileLikedPosts = () => {
   const { userdata, ownerData } = useSelector((store) => store.user);
   const { homefeed } = useSelector((store) => store.post);
- 
   return (
     <>
-      {homefeed?.map((post) => {
+      {homefeed?.filter((post) => {return post?.likes?.likedBy?.some((likedBy)=>(likedBy.username===userdata?.username))}).map((post) => {
         return (
           <PostCard
             post={post}

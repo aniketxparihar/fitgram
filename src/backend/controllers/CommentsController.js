@@ -1,3 +1,5 @@
+
+
 import { Response } from "miragejs";
 import { formatDate, requiresAuth } from "../utils/authUtils";
 import { v4 as uuid } from "uuid";
@@ -51,7 +53,12 @@ export const addPostCommentHandler = function (schema, request) {
 
         const comment = {
             _id: uuid(),
-            ...commentData,
+            postId:postId,
+            content: commentData.content,
+            profilePicture: commentData.profilePicture,
+            postUsername:commentData.username,
+            firstName: user.firstName,
+            lastName: user.lastName,
             username: user.username,
             votes: { upvotedBy: [], downvotedBy: [] },
             createdAt: formatDate(),
@@ -211,7 +218,7 @@ export const upvotePostCommentHandler = function (schema, request) {
         post.comments[commentIndex].votes.downvotedBy = post.comments[
             commentIndex
         ].votes.downvotedBy.filter((currUser) => currUser._id !== user._id);
-        // comments[commentIndex].votes.upvotedBy.push(user);
+        post.comments[commentIndex].votes.upvotedBy.push(user);
         this.db.posts.update({ _id: postId }, { ...post, updatedAt: formatDate() });
         return new Response(201, {}, { comments: post.comments });
     } catch (error) {
@@ -248,6 +255,7 @@ export const downvotePostCommentHandler = function (schema, request) {
         const commentIndex = post.comments.findIndex(
             (comment) => comment._id === commentId
         );
+        console.log(postId,commentId)
         const post = schema.posts.findBy({ _id: postId }).attrs;
 
         if (
@@ -264,7 +272,7 @@ export const downvotePostCommentHandler = function (schema, request) {
         post.comments[commentIndex].votes.upvotedBy = post.comments[
             commentIndex
         ].votes.upvotedBy.filter((currUser) => currUser._id !== user._id);
-        // comments[commentIndex].votes.downvotedBy.push(user);
+        post.comments[commentIndex].votes.downvotedBy.push(user);
         this.db.posts.update({ _id: postId }, { ...post, updatedAt: formatDate() });
         return new Response(201, {}, { comments: post.comments });
     } catch (error) {

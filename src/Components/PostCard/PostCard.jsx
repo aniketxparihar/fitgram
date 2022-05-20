@@ -1,17 +1,28 @@
 import React,{useState} from 'react'
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useTheme } from '../../Context/Theme-Context';
-import { deletePost, editPost, getAllPosts } from '../../services';
+import { addToBookmark, deletePost, dislikePost, editPost, getAllPosts, getBookmarks, getComments, likePost, removeFromBookmark } from '../../services';
 import "./PostCard.css"
 const PostCard = ({post,postOptions}) => {
   const { themeObject } = useTheme();
   const [postOptionsVisible, setPostOptionsVisible] = useState(false);
   const [editVisible, setEditVisible] = useState(false);
   const { authToken } = useSelector((store) => store.auth)
-  const [newPostContent, setNewPostContent] = useState(post.content);
-  const [newPostMedia, setNewPostMedia] = useState(post.media);
+  const { ownerData } = useSelector((store) => store.user);
+  const [newPostContent, setNewPostContent] = useState(post?.content);
+  const [newPostMedia, setNewPostMedia] = useState(post?.media);
+  const { bookmarked } = useSelector((store) => store.post);
   const dispatch = useDispatch();
+
+  const [comments, setComments] = useState([]);
+  useEffect(() => {
+    (async () => {
+      const res = await getComments(post?._id);
+      setComments(res.data.comments);
+   })()
+ })
   return (
     <div
       className="post-card__container m-8 rounded-3xl relative"
@@ -30,9 +41,9 @@ const PostCard = ({post,postOptions}) => {
           >
             {post?.firstName} {post?.lastName}
           </div>
-          <div className="username text-left text-gray-500">
+          <Link to={`/${post.username}`} onClick={()=>{}} className="username text-left text-gray-500 underline">
             {post?.username}
-          </div>
+          </Link>
         </div>
         {postOptions ? (
           <span
@@ -50,8 +61,6 @@ const PostCard = ({post,postOptions}) => {
               onClick={() => {
                 setEditVisible(!editVisible);
                 setPostOptionsVisible(!postOptionsVisible);
-               
-               
               }}
             >
               Edit post
@@ -61,6 +70,7 @@ const PostCard = ({post,postOptions}) => {
               onClick={() => {
                 deletePost(post._id, authToken);
                 dispatch(getAllPosts());
+                setPostOptionsVisible(!postOptionsVisible);
               }}
             >
               Delete post
@@ -103,18 +113,22 @@ const PostCard = ({post,postOptions}) => {
           }}
           className="edit-content  mb-8 ml-8 mr-8 text-xl text-left border rounded-xl p-2"
           value={newPostContent}
-          onChange={(e) => { setNewPostContent(e.target.value);  dispatch(getAllPosts());}}
+          onChange={(e) => {
+            setNewPostContent(e.target.value);
+            dispatch(getAllPosts());
+          }}
           placeholder={post?.content}
         />
       ) : null}
       {editVisible ? (
         <div
           className="h-14 w-32 bg-violet-700 text-gray-50 font-bold ml-8 rounded-3xl text-xl flex justify-center items-center cursor-pointer"
-          onClick={() => { editPost(
-            post._id,
-            { content: newPostContent, media: newPostMedia },
-            authToken
-          );
+          onClick={() => {
+            editPost(
+              post._id,
+              { content: newPostContent, media: newPostMedia },
+              authToken
+            );
             setNewPostContent("");
             dispatch(getAllPosts());
             setEditVisible(!editVisible);
@@ -126,6 +140,14 @@ const PostCard = ({post,postOptions}) => {
       <div className="post-options mb-8 flex justify-center items-center">
         <span
           tabIndex={"1"}
+          onClick={() => {
+            post?.likes?.likedBy?.some(
+              (likedBy) => ownerData?.username === likedBy.username
+            )
+              ? dislikePost(post._id, authToken)
+              : likePost(post._id, authToken);
+            dispatch(getAllPosts());
+          }}
           className="like material-symbols-rounded ml-8 text-red-400  rounded-full"
         >
           favorite
@@ -140,15 +162,33 @@ const PostCard = ({post,postOptions}) => {
         </div>
 
         <Link
-          to="/post"
-          className="comment material-symbols-rounded ml-8 text-gray-400  rounded-full"
+          to={`/${post?.username}/${post?._id}`}
+          className="comment material-symbols-rounded ml-8 text-gray-400  rounded-full "
         >
           comment
         </Link>
+        <div
+          style={{
+            color: themeObject.text,
+          }}
+          className="text-xl"
+        >
+          {comments?.length}
+        </div>
         <span className="share material-symbols-rounded ml-8 text-sky-400  rounded-full">
           send
         </span>
-        <span className="bookmark material-symbols-rounded ml-auto mr-8 text-green-400  rounded-full">
+        <span
+          className="bookmark material-symbols-rounded ml-auto mr-8 text-green-400  rounded-full"
+          onClick={() => {
+            bookmarked?.some(
+              (bookmarkedPost) => bookmarkedPost?._id === post?._id
+            ) === true
+              ? removeFromBookmark(post?._id, authToken)
+              : addToBookmark(post?._id, authToken);
+            dispatch(getBookmarks(authToken));
+          }}
+        >
           bookmark
         </span>
       </div>

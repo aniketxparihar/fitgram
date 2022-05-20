@@ -16,6 +16,9 @@ const Profile = () => {
   const { themeObject } = useTheme();
   const { setModalEditProfileVisible } = useModal();
 
+
+  
+
   return (
     <>
       <EditProfileModal userdata={userdata} />
@@ -66,14 +69,14 @@ const Profile = () => {
         </div>
         <a
           href={userdata?.link}
-          className="profile__username text-2xl text-purple-600 ml-12 font-bold"
+          className="profile__username text-2xl text-purple-600 ml-12 font-bold underline"
         >
           {userdata?.link}
         </a>
         <div className="profile__data flex justify-center ml-12 mt-8 mb-8">
           <Link
             to="/connections/followers"
-            className="profile__followers   text-xl text-gray-500 font-bold flex"
+            className="profile__followers   text-xl text-gray-500 font-bold flex underline"
           >
             <div className="followers--count text-violet-500 mr-2">
               {userdata?.followers?.length}
@@ -83,7 +86,7 @@ const Profile = () => {
 
           <Link
             to="/connections/following"
-            className="profile__following  text-xl text-gray-500 font-bold flex ml-8"
+            className="profile__following  text-xl text-gray-500 font-bold flex ml-8 underline"
           >
             <div className="following--count text-violet-500 mr-2">
               {userdata?.following?.length}

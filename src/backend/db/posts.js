@@ -7,16 +7,16 @@ import { formatDate } from "../utils/authUtils";
  * */
 
 export const posts = [
-  {
+  { 
     _id: uuid(),
     user_id:"",
-    content:
-      "Hi this is adarsh and this is my first post",
+    content:"Hi this is adarsh and this is my first post",
     likes: {
       likeCount: 0,
       likedBy: [],
       dislikedBy: [],
     },
+    comments: [],
     username: "test@1",
     firstName: "Adarsh",
     lastName: "Balika",
@@ -34,7 +34,8 @@ export const posts = [
       likeCount: 0,
       likedBy: [],
       dislikedBy: [],
-    },
+     },
+    comments: [],
     username: "test@2",
     firstName: "Aniket",
     lastName: "Parihar",

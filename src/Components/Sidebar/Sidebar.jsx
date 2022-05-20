@@ -95,7 +95,7 @@ const Sidebar = () => {
         }
       >
         <span className="material-symbols-rounded ">
-          {theme === "light" ? "light_mode" : "dark_mode"}
+          {theme === "light" ? "dark_mode" : "light_mode"}
         </span>
       </div>
       <div

@@ -1,9 +1,12 @@
 import React from 'react'
+import { useSelector } from 'react-redux';
 import PostCard from '../../Components/PostCard/PostCard';
 import { useTheme } from '../../Context/Theme-Context';
 import "./Bookmarks.css"
 const Bookmarks = () => {
-   const { themeObject } = useTheme();
+  const { themeObject } = useTheme();
+  const { ownerData } = useSelector((store) => store.user);
+  const { bookmarked }=useSelector((store) => store.post)
   return (
     <div className="flex flex-col items-center">
       <div
@@ -12,7 +15,12 @@ const Bookmarks = () => {
       >
         Bookmarked Posts
       </div>
-      <PostCard />
+      {
+        bookmarked?.map((post) => {
+          return <PostCard post={post} postOptions={post?.username===ownerData?.username}/>;
+        })
+      }
+     
     </div>
   );
 }

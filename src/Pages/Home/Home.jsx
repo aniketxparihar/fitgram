@@ -8,7 +8,7 @@ import { Outlet } from 'react-router-dom';
 import "./Home.css";
 import NewPostModal from '../../Components/NewPostModal/NewPostModal';
 import { useSelector, useDispatch } from 'react-redux';
-import { getAllUsers, getUser, getOwner, getAllPosts } from "../../services";
+import { getAllUsers, getUser, getOwner, getAllPosts, getBookmarks } from "../../services";
 //slices
 import { changecurrentid } from '../../redux/UserSlice';
 

@@ -15,6 +15,7 @@
     display: flex;
     justify-content: center;
     z-index:10;
+    overflow:auto;
 }
 
 .edit-profile__container{
