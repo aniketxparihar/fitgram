@@ -1,7 +1,9 @@
 import React from 'react'
 import { useSelector } from 'react-redux';
 import { useTheme } from '../../Context/Theme-Context';
+
 import { downvoteComment, upvoteComment } from '../../services';
+
 const CommentCard = ({ comment }) => {
   const { themeObject } = useTheme();
   const { authToken } = useSelector((store) => store.auth);

@@ -18,30 +18,30 @@ const Feed = () => {
   },[sort,homefeed])
   const sortFeed = () => {
       setHomefeedSorted(
-        homefeed?.slice().sort((a, b) => {
+        homefeed?.slice().sort((post1, post2) => {
           switch (sort) {
             case "trending":
-              return b?.likes?.likeCount - a?.likes?.likeCount;
+              return post2?.likes?.likeCount - post1?.likes?.likeCount;
             case "older":
               return (
                 Number(
-                  a?.createdAt.substring(0, 9).split("-").join("") +
-                   a?.createdAt.substring(11, 19).split(":").join("")
+                  post1?.createdAt.substring(0, 9).split("-").join("") +
+                    post1?.createdAt.substring(11, 19).split(":").join("")
                 ) -
                 Number(
-                  b?.createdAt.substring(0, 9).split("-").join("") +
-                    b?.createdAt.substring(11, 19).split(":").join("")
+                  post2?.createdAt.substring(0, 9).split("-").join("") +
+                    post2?.createdAt.substring(11, 19).split(":").join("")
                 )
               );
             case "recent":
               return (
                 Number(
-                  b?.createdAt.substring(0, 9).split("-").join("") +
-                    b?.createdAt.substring(11, 19).split(":").join("")
+                  post2?.createdAt.substring(0, 9).split("-").join("") +
+                    post2?.createdAt.substring(11, 19).split(":").join("")
                 ) -
                 Number(
-                  a?.createdAt.substring(0, 9).split("-").join("") +
-                    a?.createdAt.substring(11, 19).split(":").join("")
+                  post1?.createdAt.substring(0, 9).split("-").join("") +
+                    post1?.createdAt.substring(11, 19).split(":").join("")
                 )
               );
             default:

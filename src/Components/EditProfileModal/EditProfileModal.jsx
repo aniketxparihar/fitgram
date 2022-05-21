@@ -67,7 +67,6 @@ const EditProfileModal = ({ userdata }) => {
     fetch(url, requestOptions)
       .then((res) => res.json())
       .then((data) => {
-        console.log(data.url);
         editUser(
           {
             ...userdata,

@@ -1,11 +1,12 @@
 import React from 'react'
-import { useEffect } from 'react';
-import { useState } from 'react';
+import { useEffect,useState } from 'react';
 import { useSelector } from 'react-redux';
+
 import { useTheme } from '../../Context/Theme-Context';
 import { addComment, getComments } from '../../services';
 import CommentCard from '../CommentCard/CommentCard';
 import "./Comments.css"
+
 const Comments = ({post}) => {
   const { themeObject } = useTheme();
   const [newComment, setNewComment] = useState("");

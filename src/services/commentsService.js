@@ -33,7 +33,6 @@ export const editComment = async (postId, commentId, authToken, commentData) =>{
             authorization: authToken,
         }
     });
-        console.log(res);
         return res;
     }
     catch (err) {
@@ -50,7 +49,6 @@ export const deleteComment = async (postId, commentId, authToken) => {
                 authorization: authToken,
             }
         });
-        console.log(res);
         return res;
     } catch (err) { console.log(err) }
 }
@@ -62,7 +60,6 @@ export const upvoteComment = async (postId, commentId, authToken) => {
         authorization: authToken,
     }
     });
-        console.log(res);
         return res;
     } catch (err) {
         console.log(err);
@@ -77,7 +74,6 @@ export const downvoteComment = async (postId, commentId, authToken) => {
                 authorization: authToken,
             }
         });
-        console.log(res);
         return res;
     }
     catch (err) {console.log(err) } }

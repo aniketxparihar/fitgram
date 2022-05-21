@@ -1,11 +1,13 @@
 import React from 'react'
-import "./BottomBar.css"
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+
 import { useTheme } from "../../Context/Theme-Context";
 import { useModal } from "../../Context/Modal-Context";
 import { logout } from "../../redux/AuthSlice";
-import { useDispatch, useSelector } from "react-redux";
 import { changecurrentid } from "../../redux/UserSlice";
+import "./BottomBar.css";
+
 const BottomBar = () => {
           const {user} = useSelector((store) => store.auth);
           const dispatch =useDispatch();
