@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useTheme } from "../../Context/Theme-Context";
-import { addPost, editUser, getAllPosts } from "../../services";
+import { addPost, getAllPosts } from "../../services";
 import "./NewPost.css";
 const NewPost = () => {
   const { themeObject } = useTheme();

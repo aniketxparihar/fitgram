@@ -18,7 +18,6 @@ const Comments = ({post}) => {
       setComments(res.data.comments);
     })()
   }, [])
-  console.log(comments)
   return (
     <div className="comments__container">
       <div className="comments__input mb-8">
