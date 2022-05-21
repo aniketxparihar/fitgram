@@ -9,9 +9,6 @@ import axios from "axios";
 const EditProfileModal = ({ userdata }) => {
   const { themeObject } = useTheme();
   const { modalEditProfileVisible, setModalEditProfileVisible } = useModal();
-  const [newFirstName, setNewFirstName] = useState(userdata?.firstName);
-  const [newLastName, setNewLastName] = useState(userdata?.lastName);
-  const [newUsername, setNewUsername] = useState(userdata?.username);
   const [newBio, setNewBio] = useState(userdata?.bio);
   const [newPortfolio, setNewPortfolio] = useState(userdata?.link);
   const dispatch = useDispatch();
@@ -54,11 +51,10 @@ const EditProfileModal = ({ userdata }) => {
       console.log("Image file size should be less than 3MB", "error");
       return;
     }
-    const url = "https://api.cloudinary.com/v1_1/dcar6y8jk/image/upload";
-
+    const url =`https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUD_NAME}/image/upload`;
     const formData = new FormData();
     formData.append("file", imageFile);
-    formData.append("upload_preset", "eahivfql");
+    formData.append("upload_preset", process.env.REACT_APP_UPLOAD_PRESET);
 
     const requestOptions = {
       method: "POST",
@@ -139,13 +135,10 @@ const EditProfileModal = ({ userdata }) => {
             editUser(
               {
                 ...userdata,
-                firstName: newFirstName,
-                lastName: newLastName,
-                username: newUsername,
                 bio: newBio,
                 link: newPortfolio,
               },
-              userdata._id
+              authToken
             );
             setModalEditProfileVisible("none");
             dispatch(useredited());
@@ -154,76 +147,8 @@ const EditProfileModal = ({ userdata }) => {
           Save
         </div>
 
-        <div className="input__container border mt-32 mb-4 rounded-xl">
-          <label
-            className="label"
-            htmlFor="edit-profile__name"
-            style={{
-              backgroundColor: themeObject.secondary,
-              color: themeObject.text,
-            }}
-          >
-            First Name
-          </label>
-          <input
-            id="edit-profile__name"
-            className="edit-profile__name text-2xl h-12 "
-            style={{
-              backgroundColor: themeObject.secondary,
-              color: themeObject.text,
-            }}
-            value={newFirstName}
-            placeholder={userdata?.firstName}
-            onChange={(e) => setNewFirstName(e.target.value)}
-          />
-        </div>
-        <div className="input__container border  mb-4 rounded-xl">
-          <label
-            className="label"
-            htmlFor="edit-profile__name"
-            style={{
-              backgroundColor: themeObject.secondary,
-              color: themeObject.text,
-            }}
-          >
-            Last Name
-          </label>
-          <input
-            id="edit-profile__name"
-            className="edit-profile__name text-2xl h-12 "
-            style={{
-              backgroundColor: themeObject.secondary,
-              color: themeObject.text,
-            }}
-            value={newLastName}
-            placeholder={userdata?.lastName}
-            onChange={(e) => setNewLastName(e.target.value)}
-          />
-        </div>
-        <div className="input__container border mb-4 rounded-xl">
-          <label
-            className="label"
-            htmlFor="edit-profile__username"
-            style={{
-              backgroundColor: themeObject.secondary,
-              color: themeObject.text,
-            }}
-          >
-            Username
-          </label>
-          <input
-            id="edit-profile__username"
-            style={{
-              backgroundColor: themeObject.secondary,
-              color: themeObject.text,
-            }}
-            className="edit-profile__username text-2xl text-gray-400 h-12 rounded-xl"
-            Value={newUsername}
-            placeholder={userdata?.username}
-            onChange={(e) => setNewUsername(e.target.value)}
-          />
-        </div>
-        <div className="input__container border mb-4 rounded-xl">
+        
+        <div className="input__container border mb-4 rounded-xl mt-32">
           <label
             className="label"
             htmlFor="edit-profile__bio "

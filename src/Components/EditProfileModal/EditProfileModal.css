@@ -17,6 +17,9 @@
     z-index:10;
     overflow:auto;
 }
+.edit-modal__container::-webkit-scrollbar{
+    display: none;
+}
 
 .edit-profile__container{
     width:50rem;
