@@ -141,6 +141,7 @@ const PostCard = ({post,postOptions}) => {
         <span
           tabIndex={"1"}
           onClick={() => {
+            console.log("hellow there")
             post?.likes?.likedBy?.some(
               (likedBy) => ownerData?.username === likedBy.username
             )
@@ -181,6 +182,7 @@ const PostCard = ({post,postOptions}) => {
         <span
           className="bookmark material-symbols-rounded ml-auto mr-8 text-green-400  rounded-full"
           onClick={() => {
+            console.log("hello")
             bookmarked?.some(
               (bookmarkedPost) => bookmarkedPost?._id === post?._id
             ) === true

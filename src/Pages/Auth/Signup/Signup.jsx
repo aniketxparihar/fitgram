@@ -19,7 +19,7 @@ const Signup = () => {
         style={{ backgroundColor: themeObject.primary }}
       >
         <header className="heading" style={{ color: themeObject.text }}>
-          Signup
+          Signup to Fitgram
         </header>
         <form
           onSubmit={(e) => {

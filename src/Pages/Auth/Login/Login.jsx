@@ -19,7 +19,7 @@ const Login = () => {
         style={{ backgroundColor: themeObject.primary }}
       >
         <header className="heading" style={{ color: themeObject.text }}>
-          Login to Fitme
+          Login to Fitgram
         </header>
         <form
           onSubmit={(e) => {
