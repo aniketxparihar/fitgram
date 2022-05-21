@@ -4,7 +4,7 @@ import { useContext, createContext, useState, useEffect } from "react";
 const ThemeContext = createContext();
 const ThemeProvider = (props) => {
     const [themeObject, setThemeObject] = useState({ primary: "var(--light)", text: "var(--dark)", secondary: "#1e293b" });
-    const [theme, setTheme] = useState("light");
+    const [theme, setTheme] = useState("dark");
     const themeHandler = (toggleTheme) => {
         setTheme(toggleTheme);
     }

@@ -5,7 +5,6 @@ import { makeServer } from "./server";
 import { BrowserRouter } from "react-router-dom";
 import Router from "./Router"
 import {ThemeProvider} from "../src/Context/Theme-Context";
-import {AuthProvider} from "../src/Context/Auth-Context";
 import { ModalProvider } from "./Context/Modal-Context";
 import store from "./redux/store";
 import { Provider } from 'react-redux'
@@ -18,11 +17,9 @@ ReactDOM.render(
     <BrowserRouter>
       <Provider store={store}>
         <ThemeProvider>
-          <AuthProvider>
             <ModalProvider>
               <Router />
             </ModalProvider>
-          </AuthProvider>
         </ThemeProvider>
       </Provider>
       

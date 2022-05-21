@@ -37,7 +37,7 @@ const LandingPage = () => {
           className="landing__heading text-8xl  my-6 text-left w-full font-extrabold"
           style={{ color: themeObject.text }}
         >
-          Introducing <span className="text-purple-400">Fitme</span>
+          Introducing <span className="text-purple-400">Fitgram</span>
           <span className="material-symbols-rounded text-purple-400">
             magic_button
           </span>
@@ -57,7 +57,7 @@ const LandingPage = () => {
           </li>
         </ul>
         <Link
-          to="/"
+          to="/login"
           className="get-started cursor-pointer h-12 bg-purple-500 w-40 rounded-xl self-start ml-2 my-4 flex justify-center items-center text-2xl   transition-transform"
           style={{ color: themeObject.text }}
         >

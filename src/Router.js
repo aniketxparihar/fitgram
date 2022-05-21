@@ -26,8 +26,9 @@ import ProfileLikedPosts from './Pages/ProfileLikedPosts/ProfileLikedPosts';
 const Router = () => {
   return (
       <RoutesContainer>
+          <Route path="/fitgram" element={<LandingPage />} />
+
           <Route path="/" element={<App />}>
-              <Route path="/landing" element={<LandingPage />} />
               <Route element={<PrivateRoute />}>
                   <Route path="/" element={<Home />}>
                       <Route index element={<Feed />} />
