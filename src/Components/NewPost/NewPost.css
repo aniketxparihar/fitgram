@@ -4,6 +4,14 @@
     background-color: #fff;
     margin:2rem;
 }
+@media screen and (max-width: 550px) {
+  .new-post__container{
+    height:max-content;
+    width:35rem;
+    background-color: #fff;
+    margin:2rem;
+}
+}
 .display-picture{}
 .new-post__wrapper{
     width:100%;

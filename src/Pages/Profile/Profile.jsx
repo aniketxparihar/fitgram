@@ -5,14 +5,12 @@ import { Link, NavLink, Outlet } from "react-router-dom";
 import { useModal } from "../../Context/Modal-Context";
 import { useDispatch, useSelector } from "react-redux";
 import EditProfileModal from "../../Components/EditProfileModal/EditProfileModal";
-import { followUser, unfollowUser,getOwner } from "../../services";
+import { followUser, unfollowUser,getOwner, getUser } from "../../services";
 
 const Profile = () => {
   const dispatch = useDispatch();
   const { userdata, ownerData,currentId } = useSelector((store) => store.user);
   const { user, authToken } = useSelector((store) => store.auth);
-  
-  
   const { themeObject } = useTheme();
   const { setModalEditProfileVisible } = useModal();
 
@@ -40,7 +38,7 @@ const Profile = () => {
           <div
             style={ownerData?.following?.some((followingUser) => followingUser?._id === userdata?._id) ? {} : { color: themeObject.text }}
             className={`edit-profile h-12 w-32 border border-gray-400 flex justify-center items-center rounded-3xl text-xl cursor-pointer ${ownerData?.following?.some((followingUser) => followingUser?._id === userdata?._id) ? "bg-violet-700 text-gray-50 font-bold" : null}`}
-            onClick={() =>{  ownerData?.following?.some((followingUser) => followingUser?._id === userdata?._id) ? unfollowUser(userdata?._id, authToken) : followUser(userdata?._id, authToken); dispatch(getOwner(user._id)) }}>
+            onClick={() => { ownerData?.following?.some((followingUser) => followingUser?._id === userdata?._id) ? unfollowUser(userdata?._id, authToken) : followUser(userdata?._id, authToken); dispatch(getOwner(user._id));  }}>
            {ownerData?.following?.some((followingUser) => followingUser?._id === userdata?._id)? "following": "follow"}
           </div>
 

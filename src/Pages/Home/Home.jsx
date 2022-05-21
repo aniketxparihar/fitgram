@@ -11,6 +11,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getAllUsers, getUser, getOwner, getAllPosts, getBookmarks } from "../../services";
 //slices
 import { changecurrentid } from '../../redux/UserSlice';
+import BottomBar from '../../Components/BottomBar/BottomBar';
 
 export const Home = () => {
   const { themeObject } = useTheme();
@@ -45,7 +46,6 @@ export const Home = () => {
       </div>
       <div className="home__center">
         <Outlet />
-       
         <NewPostModal />
       </div>
       <div className="home__right">
@@ -53,6 +53,7 @@ export const Home = () => {
         <Home_Profile />
         <YouMightLike />
       </div>
+      <BottomBar/>
     </div>
   );
 }

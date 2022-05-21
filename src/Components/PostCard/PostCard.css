@@ -3,6 +3,13 @@
     height:max-content;
     
 }
+@media screen and (max-width: 550px) {
+  .post-card__container{
+    width:35rem;
+    height:max-content;
+    
+}
+}
 .media__container{
     width: 100%;
     display: flex;

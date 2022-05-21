@@ -14,12 +14,18 @@ body {
       monospace;
   }
   html{
-  font-size: 13px;
+  font-size: 12px;
   height:100vh;
+}
+@media screen and (max-width: 1400px) {
+html{
+  font-size:11px;
+  font-family: 'Hind Siliguri';
+}
 }
 @media screen and (max-width: 800px) {
 html{
-  font-size:13px;
+  font-size:10px;
   font-family: 'Hind Siliguri';
 }
 }

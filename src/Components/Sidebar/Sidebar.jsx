@@ -43,26 +43,7 @@ const Sidebar = () => {
         <span className="material-symbols-rounded mr-4 ">bookmark</span>
         <div className="sidebar__link--text">Bookmarks</div>
       </Link>
-      <Link
-        to="archived"
-        className="sidebar__link text-left text-xl font-bold flex rounded-3xl"
-        style={{
-          color: themeObject.text,
-        }}
-      >
-        <span className="material-symbols-rounded mr-4 ">archive</span>
-        <div className="sidebar__link--text">Archived</div>
-      </Link>
-      <Link
-        to="drafts"
-        className="sidebar__link text-left text-xl font-bold flex rounded-3xl"
-        style={{
-          color: themeObject.text,
-        }}
-      >
-        <span className="material-symbols-rounded mr-4 ">drafts</span>
-        <div className="sidebar__link--text">Drafts</div>
-      </Link>
+     
       <Link
         to={`${user.username}/`}
         onClick={() => {
