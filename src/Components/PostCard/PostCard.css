@@ -3,6 +3,13 @@
     height:max-content;
     
 }
+@media screen and (max-width: 550px) {
+  .post-card__container{
+    width:35rem;
+    height:max-content;
+    
+}
+}
 .media__container{
     width: 100%;
     display: flex;
@@ -19,7 +26,7 @@
     justify-content: start;
 }
 .like,.comment,.share,.bookmark{
-    padding:1rem;
+    padding:1rem 0.5rem 1rem 1rem;
     text-shadow: 0px 0px 4px;
     cursor:pointer;
 }
@@ -45,6 +52,7 @@
     display: flex;
     flex-direction: column;
     align-items: start;
+    z-index:1;
 }
 .post-settings--edit,.post-settings--delete{
     padding:1rem;

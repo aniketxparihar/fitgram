@@ -7,6 +7,18 @@
     align-items: center;
     position: relative;
 }
+
+@media screen and (max-width: 551px) {
+ .profile__container{
+    width:35rem;
+    height:max-content;
+    display:flex;
+    flex-direction: column;
+    justify-content:center;
+    align-items: center;
+    position: relative;
+}
+}
 .profile__cover__image{
     height:20rem;
     width:100%;

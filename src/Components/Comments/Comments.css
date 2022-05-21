@@ -19,3 +19,8 @@
     text-align:left;
     height:max-content;
 }
+@media screen and (max-width: 551px) {
+.comments__container{
+    width:35rem;
+}
+}

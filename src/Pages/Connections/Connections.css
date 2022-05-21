@@ -1,6 +1,7 @@
 .connections__container{
     width: 50rem;
 }
+
 .select-followers,.select-following{
     flex-grow:1;
     display: flex;

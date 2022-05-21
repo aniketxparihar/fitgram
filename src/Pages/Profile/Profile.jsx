@@ -5,16 +5,17 @@ import { Link, NavLink, Outlet } from "react-router-dom";
 import { useModal } from "../../Context/Modal-Context";
 import { useDispatch, useSelector } from "react-redux";
 import EditProfileModal from "../../Components/EditProfileModal/EditProfileModal";
-import { followUser, unfollowUser,getOwner } from "../../services";
+import { followUser, unfollowUser,getOwner, getUser } from "../../services";
 
 const Profile = () => {
   const dispatch = useDispatch();
   const { userdata, ownerData,currentId } = useSelector((store) => store.user);
   const { user, authToken } = useSelector((store) => store.auth);
-  
-  
   const { themeObject } = useTheme();
   const { setModalEditProfileVisible } = useModal();
+
+
+  
 
   return (
     <>
@@ -33,11 +34,11 @@ const Profile = () => {
           className="profile__display__picture h-40 w-40 rounded-full m-6"
         />
         
-        {user._id !== userdata._id? (
+        {user?._id !== userdata?._id? (
           <div
             style={ownerData?.following?.some((followingUser) => followingUser?._id === userdata?._id) ? {} : { color: themeObject.text }}
             className={`edit-profile h-12 w-32 border border-gray-400 flex justify-center items-center rounded-3xl text-xl cursor-pointer ${ownerData?.following?.some((followingUser) => followingUser?._id === userdata?._id) ? "bg-violet-700 text-gray-50 font-bold" : null}`}
-            onClick={() =>{  ownerData?.following?.some((followingUser) => followingUser?._id === userdata?._id) ? unfollowUser(userdata?._id, authToken) : followUser(userdata?._id, authToken); dispatch(getOwner(user._id)) }}>
+            onClick={() => { ownerData?.following?.some((followingUser) => followingUser?._id === userdata?._id) ? unfollowUser(userdata?._id, authToken) : followUser(userdata?._id, authToken); dispatch(getOwner(user._id));  }}>
            {ownerData?.following?.some((followingUser) => followingUser?._id === userdata?._id)? "following": "follow"}
           </div>
 
@@ -66,14 +67,14 @@ const Profile = () => {
         </div>
         <a
           href={userdata?.link}
-          className="profile__username text-2xl text-purple-600 ml-12 font-bold"
+          className="profile__username text-2xl text-purple-600 ml-12 font-bold underline"
         >
           {userdata?.link}
         </a>
         <div className="profile__data flex justify-center ml-12 mt-8 mb-8">
           <Link
             to="/connections/followers"
-            className="profile__followers   text-xl text-gray-500 font-bold flex"
+            className="profile__followers   text-xl text-gray-500 font-bold flex underline"
           >
             <div className="followers--count text-violet-500 mr-2">
               {userdata?.followers?.length}
@@ -83,7 +84,7 @@ const Profile = () => {
 
           <Link
             to="/connections/following"
-            className="profile__following  text-xl text-gray-500 font-bold flex ml-8"
+            className="profile__following  text-xl text-gray-500 font-bold flex ml-8 underline"
           >
             <div className="following--count text-violet-500 mr-2">
               {userdata?.following?.length}

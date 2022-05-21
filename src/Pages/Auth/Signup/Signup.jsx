@@ -24,7 +24,6 @@ const Signup = () => {
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            console.log(username, password, firstName, lastName);
             dispatch(signupHandler(
               {username,
               password,

@@ -1,0 +1,23 @@
+.bottombar__container{
+    width:100vw;
+    position: absolute;
+    bottom:0;
+    justify-content: space-evenly;
+    padding:2rem;
+    display: none;
+}
+.new-post{
+    position: absolute;
+    top:-12rem;
+    right:2rem;
+}
+@media screen and (max-width: 680px) {
+  .bottombar__container{
+    width:100vw;
+    position: absolute;
+    bottom:0;
+    justify-content: space-evenly;
+    padding:2rem;
+    display: flex;
+}
+}

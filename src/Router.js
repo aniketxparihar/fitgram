@@ -34,7 +34,7 @@ const Router = () => {
                       <Route path="/explore" element={<Explore/>} />
                       <Route path="/bookmarks" element={<Bookmarks />} />
                       <Route path="/archived" element={<Archived />} />
-                      <Route path="/post" element={<Post />} />
+                      <Route path="/:username/:postId" element={<Post />} />
                       <Route path="/drafts" element={<Drafts />} />
                       <Route path="/connect-people" element={<ConnectPeople />} />
                       <Route path="/connections" element={<Connections />} >

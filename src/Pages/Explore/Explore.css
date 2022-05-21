@@ -2,3 +2,9 @@
     width:50rem;
     text-align: left;
 }
+@media screen and (max-width: 551px) {
+ .explore-feed__heading{
+    width:35rem;
+    text-align: left;
+}
+}

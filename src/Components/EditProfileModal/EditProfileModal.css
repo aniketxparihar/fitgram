@@ -15,6 +15,10 @@
     display: flex;
     justify-content: center;
     z-index:10;
+    overflow:auto;
+}
+.edit-modal__container::-webkit-scrollbar{
+    display: none;
 }
 
 .edit-profile__container{
