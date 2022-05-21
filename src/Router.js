@@ -27,7 +27,6 @@ const Router = () => {
   return (
       <RoutesContainer>
           <Route path="/fitgram" element={<LandingPage />} />
-
           <Route path="/" element={<App />}>
               <Route element={<PrivateRoute />}>
                   <Route path="/" element={<Home />}>
