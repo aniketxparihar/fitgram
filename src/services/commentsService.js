@@ -1,15 +1,15 @@
 import axios from "axios";
+import { createAsyncThunk } from "@reduxjs/toolkit";
 
-
-export const getComments = async (postId) => {
+export const getComments = createAsyncThunk("posts/getcomments", async (postId) => {
     try { 
         const res = await axios.get(`/api/comments/${postId}`);
-        return res;
+        return res.data.comments;
     }
     catch (err) {
         console.log(err);
     }
-}
+})
 
 export const addComment = async (postId, authToken, commentData) => {
     try {
@@ -41,25 +41,25 @@ export const editComment = async (postId, commentId, authToken, commentData) =>{
 }
 
 
-
-export const deleteComment = async (postId, commentId, authToken) => {
+export const deleteComment =  async (postId, commentId, authToken) => {
     try {
-        const res = await axios.post(`/api/comments/delete/${postId}/${commentId}`, {
+        const res = await axios.post(`/api/comments/delete/${postId}/${commentId}`,{commentData:{}}, {
             headers: {
                 authorization: authToken,
             }
         });
-        return res;
+        return res.data.comments;
+
     } catch (err) { console.log(err) }
 }
      
 export const upvoteComment = async (postId, commentId, authToken) => {
     try {
         const res = await axios.post(`/api/comments/upvote/${postId}/${commentId}`, {
-    headers: {
-        authorization: authToken,
-    }
-    });
+            headers: {
+                authorization: authToken,
+            }
+        });
         return res;
     } catch (err) {
         console.log(err);

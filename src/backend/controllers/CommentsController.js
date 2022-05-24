@@ -185,6 +185,7 @@ export const deletePostCommentHandler = function (schema, request) {
  * */
 
 export const upvotePostCommentHandler = function (schema, request) {
+    console.log(schema,request,request.params)
     const user = requiresAuth.call(this, request);
     try {
         if (!user) {

@@ -44,3 +44,8 @@
     margin-left:auto;
      padding:0.8rem;
 }
+.emoji-container{
+    z-index:2;
+    bottom:-340px;
+    left:0rem;
+}

@@ -14,6 +14,16 @@ const Sidebar = () => {
   return (
     <div className="sidebar__container flex flex-col  ">
       <Link
+        to="/fitgram"
+        className="sidebar__link text-left text-4xl font-bold flex  rounded-3xl"
+        style={{
+          color: themeObject.text,
+        }}
+      >
+        <div className="sidebar__link--text">Fitgram</div>
+        <span className="material-symbols-rounded mr-4 ">fitness_center</span>
+      </Link>
+      <Link
         to="/"
         className="sidebar__link text-left text-xl font-bold flex  rounded-3xl"
         style={{
@@ -43,11 +53,11 @@ const Sidebar = () => {
         <span className="material-symbols-rounded mr-4 ">bookmark</span>
         <div className="sidebar__link--text">Bookmarks</div>
       </Link>
-     
+
       <Link
-        to={`${user.username}/`}
+        to={`/profile/${user.username}/`}
         onClick={() => {
-          dispatch(changecurrentid(user._id))
+          dispatch(changecurrentid(user._id));
         }}
         className="sidebar__link text-left text-xl font-bold flex rounded-3xl"
         style={{

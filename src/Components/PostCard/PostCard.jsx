@@ -3,26 +3,48 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useTheme } from '../../Context/Theme-Context';
-import { addToBookmark, deletePost, dislikePost, editPost, getAllPosts, getBookmarks, getComments, likePost, removeFromBookmark } from '../../services';
+import { changecurrentid } from '../../redux/UserSlice';
+import { addToBookmark, deletePost, dislikePost, editPost, getAllPosts, getBookmarks, getComments, getUser, likePost, removeFromBookmark } from '../../services';
 import "./PostCard.css"
-const PostCard = ({post,postOptions}) => {
+const PostCard = ({ post, postOptions }) => {
+  
+
   const { themeObject } = useTheme();
+
   const [postOptionsVisible, setPostOptionsVisible] = useState(false);
   const [editVisible, setEditVisible] = useState(false);
-  const { authToken } = useSelector((store) => store.auth)
-  const { ownerData } = useSelector((store) => store.user);
   const [newPostContent, setNewPostContent] = useState(post?.content);
   const [newPostMedia, setNewPostMedia] = useState(post?.media);
-  const { bookmarked } = useSelector((store) => store.post);
+
   const dispatch = useDispatch();
 
-  const [comments, setComments] = useState([]);
-  useEffect(() => {
-    (async () => {
-      const res = await getComments(post?._id);
-      setComments(res.data.comments);
-   })()
- })
+   const { authToken } = useSelector((store) => store.auth);
+   const { currentId,ownerData } = useSelector((store) => store.user);
+  const { bookmarked, comments } = useSelector((store) => store.post);
+
+
+  const handleOnPostMediaChange = async (e) => {
+    const imageFile = e.target.files[0];
+    if (Math.floor(imageFile / 1000000) > 3) {
+      console.log("Image file size should be less than 3MB", "error");
+      return;
+    }
+    const url = `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUD_NAME}/image/upload`;
+    const formData = new FormData();
+    formData.append("file", imageFile);
+    formData.append("upload_preset", process.env.REACT_APP_UPLOAD_PRESET);
+
+    const requestOptions = {
+      method: "POST",
+      body: formData,
+    };
+    fetch(url, requestOptions)
+      .then((res) => res.json())
+      .then((data) => {
+        setNewPostMedia(data.url);
+      })
+      .catch((err) => console.log(err));
+  };
   return (
     <div
       className="post-card__container m-8 rounded-3xl relative"
@@ -41,9 +63,10 @@ const PostCard = ({post,postOptions}) => {
           >
             {post?.firstName} {post?.lastName}
           </div>
-          <Link to={`/${post.username}`} onClick={()=>{}} className="username text-left text-gray-500 underline">
+          <Link to={`/profile/${post?.username}/`} onClick={() => { console.log(post?.user_id); dispatch(changecurrentid(post?.user_id)); dispatch(getUser(currentId)); }} className="username text-left text-gray-500 underline">
             {post?.username}
           </Link>
+          
         </div>
         {postOptions ? (
           <span
@@ -79,9 +102,10 @@ const PostCard = ({post,postOptions}) => {
         ) : null}
       </div>
       {editVisible ? null : (
-        <div className="media__container ">
+        <Link
+          to={`post/${post?.username}/${post?._id}`} className="media__container ">
           <img className="media m-4 rounded-3xl " alt="" src={post?.media} />
-        </div>
+        </Link>
       )}
       {editVisible ? (
         <div className="edit-post-media rounded-3xl cursor-pointer relative m-8">
@@ -112,7 +136,6 @@ const PostCard = ({post,postOptions}) => {
             color: themeObject.text,
           }}
           className="edit-content  mb-8 ml-8 mr-8 text-xl text-left border rounded-xl p-2"
-          value={newPostContent}
           onChange={(e) => {
             setNewPostContent(e.target.value);
             dispatch(getAllPosts());
@@ -141,7 +164,6 @@ const PostCard = ({post,postOptions}) => {
         <span
           tabIndex={"1"}
           onClick={() => {
-            console.log("hellow there")
             post?.likes?.likedBy?.some(
               (likedBy) => ownerData?.username === likedBy.username
             )
@@ -163,7 +185,7 @@ const PostCard = ({post,postOptions}) => {
         </div>
 
         <Link
-          to={`/${post?.username}/${post?._id}`}
+          to={`post/${post?.username}/${post?._id}`}
           className="comment material-symbols-rounded ml-8 text-gray-400  rounded-full "
         >
           comment
@@ -182,7 +204,6 @@ const PostCard = ({post,postOptions}) => {
         <span
           className="bookmark material-symbols-rounded ml-auto mr-8 text-green-400  rounded-full"
           onClick={() => {
-            console.log("hello")
             bookmarked?.some(
               (bookmarkedPost) => bookmarkedPost?._id === post?._id
             ) === true

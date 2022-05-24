@@ -45,7 +45,7 @@ const YouMightLike = () => {
                   {userdata?.firstName}
                 </div>
                 <Link
-                  to={`/${userdata?.username}/`}
+                  to={`profile/${userdata?.username}/`}
                   onClick={() => {
                     dispatch(changecurrentid(userdata?._id));
                   }}
