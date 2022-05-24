@@ -49,39 +49,7 @@ const CommentCard = ({comment}) => {
         {comment?.content}
       </div>
       <div className=" comment-actions flex m-8  items-center ">
-        {/* <span
-          className="material-symbols-rounded mr-2"
-          onClick={() =>
-            upvoteComment(comment?.postId, comment?._id, authToken)
-          }
-          style={{ color: themeObject.text }}
-        >
-          thumb_up
-        </span>
-        <div className="text-xl mr-8" style={{ color: themeObject.text }}>
-          {comment?.votes?.upvotedBy?.length}
-        </div>
-        <span
-          className="material-symbols-rounded mr-2"
-          onClick={() =>
-            downvoteComment(comment?.postId, comment?._id, authToken)
-          }
-          style={{ color: themeObject.text }}
-        >
-          thumb_down
-        </span>
-        <div className=" text-xl mr-8" style={{ color: themeObject.text }}>
-          {comment?.votes?.downvotedBy?.length}
-        </div>
-        <span
-          className="material-symbols-rounded  ml-auto mr-8"
-          onClick={() =>
-            editComment(comment?.postId, comment?._id, authToken)
-          }
-          style={{ color: themeObject.text }}
-        >
-          edit
-        </span> */}
+    
         <span
           className="material-symbols-rounded ml-auto mr-8"
           onClick={() => {
