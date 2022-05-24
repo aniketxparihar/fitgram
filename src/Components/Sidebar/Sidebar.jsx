@@ -45,7 +45,7 @@ const Sidebar = () => {
       </Link>
      
       <Link
-        to={`${user.username}/`}
+        to={`/profile/${user.username}/`}
         onClick={() => {
           dispatch(changecurrentid(user._id))
         }}

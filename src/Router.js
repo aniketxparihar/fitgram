@@ -23,10 +23,12 @@ import Drafts from './Pages/Drafts/Drafts';
 import Post from './Pages/Post/Post';
 import ProfilePosts from './Pages/ProfilePosts/ProfilePosts';
 import ProfileLikedPosts from './Pages/ProfileLikedPosts/ProfileLikedPosts';
+import NotFound from './Pages/NotFound/NotFound';
 const Router = () => {
   return (
       <RoutesContainer>
           <Route path="/fitgram" element={<LandingPage />} />
+          
           <Route path="/" element={<App />}>
               <Route element={<PrivateRoute />}>
                   <Route path="/" element={<Home />}>
@@ -34,7 +36,7 @@ const Router = () => {
                       <Route path="/explore" element={<Explore/>} />
                       <Route path="/bookmarks" element={<Bookmarks />} />
                       <Route path="/archived" element={<Archived />} />
-                      <Route path="/:username/:postId" element={<Post />} />
+                      <Route path="post/:username/:postId" element={<Post />} />
                       <Route path="/drafts" element={<Drafts />} />
                       <Route path="/connect-people" element={<ConnectPeople />} />
                       <Route path="/connections" element={<Connections />} >
@@ -42,10 +44,10 @@ const Router = () => {
                           <Route path="/connections/followers" element={<Followers />} />
                       </Route>
                       <Route path="/following" element={<Following />} />
-                      <Route path="/:username" element={<Profile />} >
+                      <Route path="profile/:username/" element={<Profile />} >
                           <Route index  element={<ProfilePosts />} />
-                          <Route path="/:username/media" element={<Media />} />
-                          <Route path="/:username/liked" element={<ProfileLikedPosts/>} />
+                          <Route path="media" element={<Media />} />
+                          <Route path="liked" element={<ProfileLikedPosts/>} />
                       </Route>
                       <Route path="/bookmarks" element={<Profile />} />
                   </Route>
@@ -56,6 +58,7 @@ const Router = () => {
                   <Route path="/forgotpassword" element={<ForgotPassword />} />
               </Route>
           </Route>
+          <Route path='*' element={<NotFound />} />
       </RoutesContainer>
   )
 }

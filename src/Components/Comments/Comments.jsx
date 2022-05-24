@@ -1,6 +1,6 @@
 import React from 'react'
 import { useEffect,useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { useTheme } from '../../Context/Theme-Context';
 import { addComment, getComments } from '../../services';
@@ -10,14 +10,12 @@ import "./Comments.css"
 const Comments = ({post}) => {
   const { themeObject } = useTheme();
   const [newComment, setNewComment] = useState("");
-  const [comments, setComments] = useState([]);
   const { authToken } = useSelector((store) => store.auth);
   const { ownerData } = useSelector((store) => store.user);
+  const { comments } = useSelector((store) => store.post);
+  const dispatch = useDispatch();
   useEffect(() => {
-    (async () => {
-      const res = await getComments(post?._id);
-      setComments(res.data.comments);
-    })()
+    dispatch(getComments(post?._id));
   }, [])
   return (
     <div className="comments__container">
@@ -43,9 +41,8 @@ const Comments = ({post}) => {
           onClick={async () => {
             if(newComment?.length>0){
             addComment(post?._id, authToken, {content:newComment,profilePicture:ownerData.profilePicture,username:post.username});
-            setNewComment("");
-            const res = await getComments(post?._id);
-              setComments(res?.data?.comments);
+              setNewComment("");
+              dispatch(getComments(post?._id))
             }
             else {
               return;

@@ -1,12 +1,13 @@
 import { createSlice} from "@reduxjs/toolkit";
-import { getAllPosts, getBookmarks } from "../services";
+import { deleteComment, getAllPosts, getBookmarks, getComments } from "../services";
 
 const postSlice = createSlice({
     name: "user",
     initialState: {
         homefeed: [],
         explorefeed: [],
-        bookmarked:[]
+        bookmarked: [],
+        comments:[]
     },
     reducers: {
     
@@ -18,7 +19,11 @@ const postSlice = createSlice({
         },
         [getBookmarks.fulfilled]: (state, action) => {
             state.bookmarked = action.payload;
+        },
+        [getComments.fulfilled]: (state, action) => {
+            state.comments = action.payload;
         }
+       
     }
 })
 export const {  } = postSlice.actions;

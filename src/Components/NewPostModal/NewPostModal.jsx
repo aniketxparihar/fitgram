@@ -3,6 +3,7 @@ import { useSelector,useDispatch } from 'react-redux';
 import { useModal } from '../../Context/Modal-Context';
 import { useTheme } from '../../Context/Theme-Context';
 import { addPost, getAllPosts } from "../../services";
+import Picker from "emoji-picker-react";
 import "./NewPostModal.css"
 const NewPostModal = () => {
     const { themeObject } = useTheme();
@@ -13,6 +14,37 @@ const NewPostModal = () => {
   const dispatch = useDispatch();
   const [newPostContent, setNewPostContent] = useState("");
   const [newPostMedia, setNewPostMedia] = useState("");
+const [event, setEvent] = useState(null);
+const [chosenEmoji, setChosenEmoji] = useState(false);
+const onEmojiClick = (event, emojiObject) => {
+  console.log(emojiObject);
+  setNewPostContent(() => newPostContent + emojiObject.emoji);
+  setChosenEmoji(!chosenEmoji);
+};
+const handleOnPostMediaChange = async (e) => {
+  const imageFile = e.target.files[0];
+  if (Math.floor(imageFile / 1000000) > 3) {
+    console.log("Image file size should be less than 3MB", "error");
+    return;
+  }
+  const url = `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUD_NAME}/image/upload`;
+  const formData = new FormData();
+  formData.append("file", imageFile);
+  formData.append("upload_preset", process.env.REACT_APP_UPLOAD_PRESET);
+
+  const requestOptions = {
+    method: "POST",
+    body: formData,
+  };
+  fetch(url, requestOptions)
+    .then((res) => res.json())
+    .then((data) => {
+      console.log(data.url);
+      setNewPostMedia(data.url);
+      setEvent(e);
+    })
+    .catch((err) => console.log(err));
+};
 
     return (
       <div
@@ -51,22 +83,31 @@ const NewPostModal = () => {
               onChange={(e) => setNewPostContent(e.target.value)}
             />
           </div>
-          <div className="new-post-modal__options">
-            <span className="material-symbols-rounded text-violet-500   rounded-full mr-8">
-              perm_media
-            </span>
+          <div className="new-post-modal__options relative">
+            <input
+              type="file"
+              accept="image/*"
+              className="media-input w-52 cursor-pointer"
+              onChange={(e) => {
+                handleOnPostMediaChange(e);
+              }}
+              style={{
+                color: themeObject.text,
+              }}
+            />
 
-            <span className="material-symbols-rounded text-violet-500  rounded-full mr-8">
+            <span
+              className="material-symbols-rounded text-violet-500  rounded-full mr-auto cursor-pointer"
+              onClick={() => setChosenEmoji(!chosenEmoji)}
+            >
               add_reaction
             </span>
 
-            <span className="material-symbols-rounded text-violet-500  rounded-full mr-8">
-              gif_box
-            </span>
-
-            <span className="material-symbols-rounded text-violet-500  rounded-full ">
-              pin_drop
-            </span>
+            {chosenEmoji ? (
+              <div className="emoji-container absolute">
+                <Picker onEmojiClick={onEmojiClick} />
+              </div>
+            ) : null}
             <div
               className="add-post w-32 text-xl font-bold  bg-violet-700 text-gray-50 rounded-3xl "
               disabled={newPostContent.length < 1}
@@ -79,6 +120,8 @@ const NewPostModal = () => {
                 dispatch(getAllPosts());
                 setNewPostContent("");
                 setNewPostMedia("");
+                event.target.value = null;
+                setEvent(null);
               }}
             >
               Post

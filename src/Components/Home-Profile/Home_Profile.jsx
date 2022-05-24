@@ -50,7 +50,7 @@ const Home_Profile = () => {
           Following
         </div>
       </div>
-      <Link to={`/${user?.username}`} onClick={()=>{dispatch(changecurrentid(user?._id))}} className="text-violet-600 mb-8 text-xl font-bold">
+      <Link to={`/profile/${user?.username}/`} onClick={()=>{dispatch(changecurrentid(user?._id))}} className="text-violet-600 mb-8 text-xl font-bold">
         My Profile
       </Link>
     </div>

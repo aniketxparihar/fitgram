@@ -14,7 +14,7 @@ const ConnectUserCard = ({userdata}) => {
   return (
     <div className="connect-user-card__container m-4">
       <Link
-        to={`/${userdata?._id}`}
+        to={`/profile/${userdata?.username}/`}
         onClick={() => dispatch(changecurrentid(userdata?._id))}
         className="flex justify-center items-center "
       >
@@ -33,23 +33,31 @@ const ConnectUserCard = ({userdata}) => {
           {userdata?.firstName} {userdata?.lastName}
         </div>
         <Link
-          to={`/${userdata?.username}`}
+          to={`/profile/${userdata?.username}/`}
           onClick={() => dispatch(changecurrentid(userdata?._id))}
           className="connect-user-card__profile__data--username text-gray-400 text-xl  flex justify-start underline"
+          replace={true}
         >
           {userdata?.username}
         </Link>
       </div>
-      <div className="follow h-14 w-32 text-xl bg-gray-200 hover:bg-violet-500 cursor-pointer font-bold flex justify-center items-center rounded-full ml-auto" onClick={() => {
-        ownerData?.following?.some(
+      <div
+        className="follow h-14 w-32 text-xl bg-gray-200 hover:bg-violet-500 cursor-pointer font-bold flex justify-center items-center rounded-full ml-auto"
+        onClick={() => {
+          ownerData?.following?.some(
+            (followingUser) => followingUser?._id === userdata?._id
+          )
+            ? unfollowUser(userdata?._id, authToken)
+            : followUser(userdata?._id, authToken);
+          dispatch(getOwner(user?._id));
+          dispatch(getUser(user?._id));
+        }}
+      >
+        {ownerData?.following?.some(
           (followingUser) => followingUser?._id === userdata?._id
         )
-          ? unfollowUser(userdata?._id, authToken)
-          : followUser(userdata?._id, authToken);
-        dispatch(getOwner(user?._id));
-        dispatch(getUser(user?._id));
-      }}>
-        {ownerData?.following?.some((followingUser)=>followingUser?._id===userdata?._id)?"following":"follow"}
+          ? "following"
+          : "follow"}
       </div>
     </div>
   );

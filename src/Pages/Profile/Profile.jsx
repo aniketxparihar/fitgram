@@ -14,9 +14,6 @@ const Profile = () => {
   const { themeObject } = useTheme();
   const { setModalEditProfileVisible } = useModal();
 
-
-  
-
   return (
     <>
       <EditProfileModal userdata={userdata} />
@@ -30,25 +27,51 @@ const Profile = () => {
           className="profile__cover__image rounded-t-3xl"
         />
         <img
+          alt=""
           src={userdata?.profilePicture}
           className="profile__display__picture h-40 w-40 rounded-full m-6"
         />
-        
-        {user?._id !== userdata?._id? (
-          <div
-            style={ownerData?.following?.some((followingUser) => followingUser?._id === userdata?._id) ? {} : { color: themeObject.text }}
-            className={`edit-profile h-12 w-32 border border-gray-400 flex justify-center items-center rounded-3xl text-xl cursor-pointer ${ownerData?.following?.some((followingUser) => followingUser?._id === userdata?._id) ? "bg-violet-700 text-gray-50 font-bold" : null}`}
-            onClick={() => { ownerData?.following?.some((followingUser) => followingUser?._id === userdata?._id) ? unfollowUser(userdata?._id, authToken) : followUser(userdata?._id, authToken); dispatch(getOwner(user._id));  }}>
-           {ownerData?.following?.some((followingUser) => followingUser?._id === userdata?._id)? "following": "follow"}
-          </div>
 
-        ) : <div
+        {user?._id !== userdata?._id ? (
+          <div
+            style={
+              ownerData?.following?.some(
+                (followingUser) => followingUser?._id === userdata?._id
+              )
+                ? {}
+                : { color: themeObject.text }
+            }
+            className={`edit-profile h-12 w-32 border border-gray-400 flex justify-center items-center rounded-3xl text-xl cursor-pointer ${
+              ownerData?.following?.some(
+                (followingUser) => followingUser?._id === userdata?._id
+              )
+                ? "bg-violet-700 text-gray-50 font-bold"
+                : null
+            }`}
+            onClick={() => {
+              ownerData?.following?.some(
+                (followingUser) => followingUser?._id === userdata?._id
+              )
+                ? unfollowUser(userdata?._id, authToken)
+                : followUser(userdata?._id, authToken);
+              dispatch(getOwner(user._id));
+            }}
+          >
+            {ownerData?.following?.some(
+              (followingUser) => followingUser?._id === userdata?._id
+            )
+              ? "following"
+              : "follow"}
+          </div>
+        ) : (
+          <div
             style={{ color: themeObject.text }}
             className="edit-profile h-12 w-32 border border-gray-400 flex justify-center items-center rounded-3xl text-xl cursor-pointer"
             onClick={() => setModalEditProfileVisible("flex")}
           >
             Edit Profile
-          </div>}
+          </div>
+        )}
 
         <div
           className="profile__name text-4xl ml-12"
@@ -91,17 +114,11 @@ const Profile = () => {
             </div>
             Following
           </Link>
-          {/* <div
-            to="/connections/following"
-            className="profile__posts  text-xl text-gray-500 font-bold flex ml-8"
-          >
-            <div className="post--count text-violet-500 mr-2">200</div>
-            Posts
-          </div> */}
+         
         </div>
         <div className="user-data ml-8  rounded-b-3xl">
           <NavLink
-            to={`/${userdata?.username}/`}
+            to={`/profile/${userdata?.username}/`}
             className="posts text-2xl hover:bg-sky-500 cursor-pointer font-bold rounded-bl-3xl "
             style={({ isActive }) => ({
               backgroundColor: isActive ? "#8b5cf6" : "transparent",
@@ -111,7 +128,7 @@ const Profile = () => {
             Posts
           </NavLink>
           <NavLink
-            to={`/${userdata?.username}/media`}
+            to={`media`}
             className="media text-2xl hover:bg-sky-500 cursor-pointer font-bold "
             style={({ isActive }) => ({
               backgroundColor: isActive ? "#8b5cf6" : "transparent",
@@ -121,7 +138,7 @@ const Profile = () => {
             Media
           </NavLink>
           <NavLink
-            to={`/${userdata?.username}/liked`}
+            to={`liked`}
             className="likes text-2xl hover:bg-sky-500 cursor-pointer font-bold rounded-br-3xl"
             style={({ isActive }) => ({
               backgroundColor: isActive ? "#8b5cf6" : "transparent",

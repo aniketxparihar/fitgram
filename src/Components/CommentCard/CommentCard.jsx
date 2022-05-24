@@ -1,12 +1,16 @@
 import React from 'react'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useTheme } from '../../Context/Theme-Context';
 
-import { downvoteComment, upvoteComment } from '../../services';
+import "./CommentCard.css"
+import { deleteComment, downvoteComment, editComment, getComments, upvoteComment } from '../../services';
+import { useState } from 'react';
 
-const CommentCard = ({ comment }) => {
+const CommentCard = ({comment}) => {
   const { themeObject } = useTheme();
   const { authToken } = useSelector((store) => store.auth);
+  
+  const dispatch = useDispatch();
   return (
     <div
       className="comments flex flex-col p-8  mt-8 mb-8 rounded-3xl"
@@ -44,10 +48,11 @@ const CommentCard = ({ comment }) => {
       >
         {comment?.content}
       </div>
-      <div className="flex m-8  items-center">
-        <span
+      <div className=" comment-actions flex m-8  items-center ">
+        {/* <span
           className="material-symbols-rounded mr-2"
-          onClick={() =>upvoteComment(comment?.postId, comment?._id, authToken)
+          onClick={() =>
+            upvoteComment(comment?.postId, comment?._id, authToken)
           }
           style={{ color: themeObject.text }}
         >
@@ -58,7 +63,8 @@ const CommentCard = ({ comment }) => {
         </div>
         <span
           className="material-symbols-rounded mr-2"
-          onClick={() =>downvoteComment(comment?.postId, comment?._id, authToken)
+          onClick={() =>
+            downvoteComment(comment?.postId, comment?._id, authToken)
           }
           style={{ color: themeObject.text }}
         >
@@ -67,6 +73,25 @@ const CommentCard = ({ comment }) => {
         <div className=" text-xl mr-8" style={{ color: themeObject.text }}>
           {comment?.votes?.downvotedBy?.length}
         </div>
+        <span
+          className="material-symbols-rounded  ml-auto mr-8"
+          onClick={() =>
+            editComment(comment?.postId, comment?._id, authToken)
+          }
+          style={{ color: themeObject.text }}
+        >
+          edit
+        </span> */}
+        <span
+          className="material-symbols-rounded ml-auto mr-8"
+          onClick={() => {
+            deleteComment(comment?.postId, comment?._id, authToken);
+            dispatch(getComments(comment?.postId));
+          }}
+          style={{ color: themeObject.text }}
+        >
+          delete
+        </span>
       </div>
     </div>
   );

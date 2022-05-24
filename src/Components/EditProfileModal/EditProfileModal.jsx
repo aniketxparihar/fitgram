@@ -20,11 +20,10 @@ const EditProfileModal = ({ userdata }) => {
       console.log("Image file size should be less than 3MB", "error");
       return;
     }
-    const url = "https://api.cloudinary.com/v1_1/dcar6y8jk/image/upload";
-
-    const formData = new FormData();
-    formData.append("file", imageFile);
-    formData.append("upload_preset", "eahivfql");
+   const url = `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUD_NAME}/image/upload`;
+   const formData = new FormData();
+   formData.append("file", imageFile);
+   formData.append("upload_preset", process.env.REACT_APP_UPLOAD_PRESET);
 
     const requestOptions = {
       method: "POST",
