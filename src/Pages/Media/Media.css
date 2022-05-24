@@ -11,3 +11,11 @@
     margin:2rem;
     height: max-content;
 }
+@media screen and (max-width: 550px) {
+  .media-items-container{
+    height:max-content;
+    width:35rem;
+    background-color: #fff;
+    margin:2rem;
+}
+}
