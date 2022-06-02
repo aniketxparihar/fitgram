@@ -5,14 +5,14 @@ export const getAllPosts = createAsyncThunk("posts/getallposts", async () => {
     try {
         const res = await axios.get("/api/posts");
         return res.data.posts;
-}
+    }
     catch (err) {
         console.log(err)
     }
-    
-}) 
 
-export const getPost = createAsyncThunk("posts/getposts",async (postId) => {
+})
+
+export const getPost = createAsyncThunk("posts/getposts", async (postId) => {
     try {
         const res = await axios.post(`/api/posts/${postId}`)
         console.log(res);
@@ -23,7 +23,7 @@ export const getPost = createAsyncThunk("posts/getposts",async (postId) => {
     }
 })
 
-export const getAllPostsFromUsername =  async (username)  => {
+export const getAllPostsFromUsername = async (username) => {
     try {
         const res = await axios.get(`/api/posts/user/${username}`);
         return res;
@@ -32,9 +32,9 @@ export const getAllPostsFromUsername =  async (username)  => {
         console.log(err)
     }
 
-} 
+}
 
-export const addPost =  async (postData, authToken) => {
+export const addPost = async (postData, authToken) => {
     try {
         const res = await axios.post("/api/posts", { postData }, {
             headers: {
@@ -49,7 +49,7 @@ export const addPost =  async (postData, authToken) => {
 
 }
 
-export const deletePost =  async (postId, authToken) => {
+export const deletePost = async (postId, authToken) => {
     try {
         const res = await axios.delete(`/api/posts/${postId}`, {
             headers: {
@@ -67,7 +67,7 @@ export const deletePost =  async (postId, authToken) => {
 
 
 export const editPost = async (postId, postData, authToken) => {
-    console.log(postId,postData,authToken)
+    console.log(postId, postData, authToken)
     try {
         const res = await axios.post(`/api/posts/edit/${postId}`, { postData }, {
             headers: {
@@ -82,3 +82,17 @@ export const editPost = async (postId, postData, authToken) => {
     }
 
 }
+
+export const getPagedPosts = createAsyncThunk(
+    "/posts/getPagedPosts",
+    async ({ pageNum, rejectWithValue }) => {
+        try {
+            const response = await axios.get(`/api/posts/page/${pageNum}`);
+            console.log(response)
+            return response.data.posts;
+        } catch (error) {
+            console.error(error.response.data);
+            return rejectWithValue(error.response.data);
+        }
+    }
+);
