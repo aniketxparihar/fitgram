@@ -302,7 +302,6 @@ export const getLatestPagedPosts = function (schema, request) {
   const latestPosts = this.db.posts.sort(
     (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
   );
-  console.log(latestPosts)
   const paginatedPosts = latestPosts.slice(0, pageNum * 4 + 4);
   return new Response(200, {}, { posts: paginatedPosts });
 };

@@ -4,6 +4,7 @@ import { useTheme } from "../../Context/Theme-Context";
 import { addPost, getAllPosts } from "../../services";
 import Picker from "emoji-picker-react";
 import "./NewPost.css";
+import { toast } from "react-toastify";
 const NewPost = () => {
   const { themeObject } = useTheme();
   const { authToken } = useSelector((store) => store.auth);
@@ -43,7 +44,18 @@ const NewPost = () => {
       })
       .catch((err) => console.log(err));
   };
-
+const notify = (text, type) => {
+  switch (type) {
+    case "success":
+      toast.success(text);
+      return;
+    case "failed":
+      toast.failed(text);
+      return;
+    default:
+      return;
+  }
+};
   return (
     <div
       className="new-post__container rounded-3xl flex flex-col"
@@ -68,25 +80,28 @@ const NewPost = () => {
         />
       </div>
       <div className="new-post__options relative">
-        <input
-          type="file"
-          accept="image/*"
-          className="media-input w-52 cursor-pointer"
-          onChange={(e) => {
-            handleOnPostMediaChange(e);
-          }}
-          style={{
-            color: themeObject.text,
-          }}
-        />
-
+        <div className="media-input__container flex">
+          <input
+            type="file"
+            accept="image/*"
+            className="media-input w-52 cursor-pointer"
+            onChange={(e) => {
+              handleOnPostMediaChange(e);
+            }}
+            style={{
+              color: themeObject.text,
+            }}
+          />
+          <span className="material-symbols-rounded text-violet-500  rounded-full mr-auto cursor-pointer">
+            perm_media
+          </span>
+        </div>
         <span
           className="material-symbols-rounded text-violet-500  rounded-full mr-auto cursor-pointer"
           onClick={() => setChosenEmoji(!chosenEmoji)}
         >
           add_reaction
         </span>
-
         {chosenEmoji ? (
           <div className="emoji-container absolute">
             <Picker onEmojiClick={onEmojiClick} />
@@ -97,16 +112,19 @@ const NewPost = () => {
           disabled={newPostContent.length < 1}
           className="add-post w-32 text-xl font-bold  bg-violet-700 text-gray-50 rounded-3xl cursor-pointer"
           onClick={() => {
-            if(imageReceived)  {addPost(
-              { content: newPostContent, media: newPostMedia },
-              authToken
-            ) 
-            dispatch(getAllPosts());
-            setNewPostContent("");
-            setNewPostMedia("");
-            event.target.value = null;
-            setEvent(null);
-            setImageReceived(!imageReceived);}
+            if (imageReceived) {
+              addPost(
+                { content: newPostContent, media: newPostMedia },
+                authToken
+              );
+              dispatch(getAllPosts());
+              setNewPostContent("");
+              setNewPostMedia("");
+              event.target.value = null;
+              setEvent(null);
+              setImageReceived(!imageReceived);
+              notify("Post Addded", "success");
+            }
           }}
         >
           Post

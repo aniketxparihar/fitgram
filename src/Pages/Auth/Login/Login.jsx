@@ -8,10 +8,16 @@ const Login = () => {
 
   const dispatch = useDispatch();
   const { themeObject } = useTheme();
-  const [username, setUsername] = useState("test@1");
-  const [password, setPassword] = useState("test");
-  const [rememberme, setRememberme] = useState(true);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [rememberme, setRememberme] = useState(false);
+ 
 
+  const handleTestCredentials = () => {
+    setUsername("test@1");
+    setPassword("test");
+    setRememberme(true);
+  }
   return (
     <div className="login__container">
       <div
@@ -24,7 +30,7 @@ const Login = () => {
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            dispatch(loginHandler({username,password,rememberme}));
+            dispatch(loginHandler({ username, password, rememberme }));
           }}
         >
           <div className="email">
@@ -36,9 +42,7 @@ const Login = () => {
               id="email__input"
               className="email__input text-xl "
               value={username}
-              onChange={(e) =>
-                setUsername(e.target.value)
-              }
+              onChange={(e) => setUsername(e.target.value)}
               style={{ color: themeObject.text }}
             />
           </div>
@@ -54,8 +58,7 @@ const Login = () => {
               id="password__input"
               className="password__input text-xl"
               value={password}
-              onChange={(e) =>setPassword(e.target.value)
-              }
+              onChange={(e) => setPassword(e.target.value)}
               style={{ color: themeObject.text }}
             />
           </div>
@@ -67,23 +70,20 @@ const Login = () => {
                 className="rememberMe"
                 checked={rememberme}
                 onChange={() => {
-                  setRememberme(!rememberme)
+                  setRememberme(!rememberme);
                 }}
               />
-              <label
-                htmlFor="rememberMe"
-                style={{ color: themeObject.text }}
-                
-              >
+              <label htmlFor="rememberMe" style={{ color: themeObject.text }}>
                 Remember Me
               </label>
             </div>
-
-            <Link to="/forgotpassword" className="forgotPassword">
+            {/* ToDo */}
+            {/* <Link to="/forgotpassword" className="forgotPassword">
               Forgot Password
-            </Link>
+            </Link> */}
           </div>
           <input type="submit" className="login__button" value="Login" />
+          <input type="submit" className="login__button" value="Login with Test Credentials" onClick={handleTestCredentials}/>
           <div className="noaccount" style={{ color: themeObject.text }}>
             Don't have an account?
             <Link to="/signup" className="text-2xl text-cyan-400">

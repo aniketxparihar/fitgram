@@ -27,6 +27,7 @@ const postSlice = createSlice({
         [getAllPosts.fulfilled]: (state, action) => {
             state.homefeed = JSON.parse(JSON.stringify(action.payload));
             state.explorefeed = action.payload;
+            state.totalPages = Math.ceil(action.payload.length / 4);
         },
         [getBookmarks.fulfilled]: (state, action) => {
             state.bookmarked = action.payload;
@@ -35,7 +36,6 @@ const postSlice = createSlice({
             state.comments = action.payload;
         },
         [getPagedPosts.fulfilled]: (state, action) => {
-            console.log(action.payload)
             state.pagedPosts = action.payload;
             state.pagedPostStatus = "fulfilled";
         },

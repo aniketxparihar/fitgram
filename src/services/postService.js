@@ -88,7 +88,6 @@ export const getPagedPosts = createAsyncThunk(
     async ({ pageNum, rejectWithValue }) => {
         try {
             const response = await axios.get(`/api/posts/page/${pageNum}`);
-            console.log(response)
             return response.data.posts;
         } catch (error) {
             console.error(error.response.data);

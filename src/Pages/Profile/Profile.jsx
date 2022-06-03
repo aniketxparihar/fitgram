@@ -5,7 +5,8 @@ import { Link, NavLink, Outlet } from "react-router-dom";
 import { useModal } from "../../Context/Modal-Context";
 import { useDispatch, useSelector } from "react-redux";
 import EditProfileModal from "../../Components/EditProfileModal/EditProfileModal";
-import { followUser, unfollowUser,getOwner, getUser } from "../../services";
+import { followUser, unfollowUser,getOwner } from "../../services";
+import { toast } from "react-toastify";
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -13,7 +14,18 @@ const Profile = () => {
   const { user, authToken } = useSelector((store) => store.auth);
   const { themeObject } = useTheme();
   const { setModalEditProfileVisible } = useModal();
-
+ const notify = (text, type) => {
+   switch (type) {
+     case "success":
+       toast.success(text);
+       return;
+     case "failed":
+       toast.failed(text);
+       return;
+     default:
+       return;
+   }
+ };
   return (
     <>
       <EditProfileModal userdata={userdata} />
@@ -49,11 +61,10 @@ const Profile = () => {
                 : null
             }`}
             onClick={() => {
-              ownerData?.following?.some(
+              if (ownerData?.following?.some(
                 (followingUser) => followingUser?._id === userdata?._id
-              )
-                ? unfollowUser(userdata?._id, authToken)
-                : followUser(userdata?._id, authToken);
+              )) { unfollowUser(userdata?._id, authToken); notify("User Unfollowed", "success"); }
+              else { followUser(userdata?._id, authToken); notify("User Followed", "success"); }
               dispatch(getOwner(user._id));
             }}
           >

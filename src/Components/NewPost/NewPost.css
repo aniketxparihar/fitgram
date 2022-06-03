@@ -27,6 +27,7 @@
     outline:none;
     overflow: block;
 }
+
 .new-post__input::-webkit-scrollbar{
     display: none;
 }
@@ -48,4 +49,16 @@
     z-index:2;
     bottom:-340px;
     left:0rem;
+}
+.media-input{
+opacity:0;
+position: absolute;
+top:5px;
+left:0;
+cursor:pointer;
+}
+.media-input__container{
+    width:2.5rem;
+    overflow:hidden;
+    position: relative;
 }

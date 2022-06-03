@@ -15,30 +15,33 @@ const Explore = () => {
     pagedPosts,
     pagedPostStatus,
     pageNum,
-    totalPages,
   } = useSelector((store) => store.post);
   const dispatch = useDispatch();
-  const [lastPost, setLastPost] = useState();
-  const intersectionObserver = useRef(
-    new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) dispatch(setPageNum({ pageNum }));
-      },
-      { threshold: 1 }
-    )
-  );
-  useEffect(() => {
-    dispatch(getPagedPosts({ pageNum }));
-  }, [pageNum, posts,totalPages]);
-  useEffect(() => {
-    // setting new last post
-    if (lastPost) intersectionObserver.current.observe(lastPost);
-    // unsetting the previous last post
-    return () => {
-      if (lastPost) intersectionObserver.current.disconnect();
-    };
-  }, [lastPost, intersectionObserver]);
-  console.log(pageNum,pagedPosts);
+ 
+    useEffect(() => dispatch(getPagedPosts({ pageNum })), [pageNum, posts]);
+
+  
+  const loader = useRef();
+    useEffect(() => {
+      const elementRef = loader.current;
+
+      const handleObserver = (entries) => {
+        const target = entries[0];
+        if (target.isIntersecting) {
+          dispatch(setPageNum())
+        }
+      };
+
+      // When we register our observer, It will be called once when first initialized
+      // Then It will auto call whenever observer comes in viewport
+      const observer = new IntersectionObserver(handleObserver);
+      if (elementRef) observer.observe(elementRef);
+
+      return () => {
+        observer.unobserve(elementRef);
+      };
+    }, []);
+
   return (
     <div className="flex flex-col items-center">
       <div
@@ -47,14 +50,13 @@ const Explore = () => {
       >
         Explore Feed
       </div>
-      {pagedPosts.map((post, index) =>
-        index === pagedPosts.length - 1 && pageNum < totalPages ? (
-          <PostCard post={post} key={post._id} ref={setLastPost} />
-        ) : (
-          <PostCard post={post} key={post._id} />
-        )
+      {pagedPosts.map((post, index) => (
+        <PostCard post={post} key={post._id} />
+      ))}
+      <div ref={loader} className="text-gray-50 text-3xl pb-2"/>
+      {pagedPostStatus === "pending" && (
+      <div className="text-gray-50 text-3xl">Loading...</div>
       )}
-      {pagedPostStatus === "pending" && <div>Loading...</div>}
     </div>
   );
 };
