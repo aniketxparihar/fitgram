@@ -1,28 +1,42 @@
 import React,{useState} from 'react'
-import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import {  toast } from "react-toastify";
 import { useTheme } from '../../Context/Theme-Context';
 import { changecurrentid } from '../../redux/UserSlice';
 import { addToBookmark, deletePost, dislikePost, editPost, getAllPosts, getBookmarks, getComments, getUser, likePost, removeFromBookmark } from '../../services';
+import { getPagedPosts } from '../../services/postService';
 import "./PostCard.css"
 const PostCard = ({ post, postOptions }) => {
   
-
+  console.log(post)
   const { themeObject } = useTheme();
 
   const [postOptionsVisible, setPostOptionsVisible] = useState(false);
   const [editVisible, setEditVisible] = useState(false);
   const [newPostContent, setNewPostContent] = useState(post?.content);
   const [newPostMedia, setNewPostMedia] = useState(post?.media);
-
-  const dispatch = useDispatch();
+const {  pageNum } = useSelector(
+  (store) => store.post
+);
+const dispatch = useDispatch();
 
    const { authToken } = useSelector((store) => store.auth);
    const { currentId,ownerData } = useSelector((store) => store.user);
   const { bookmarked, comments } = useSelector((store) => store.post);
 
-
+  const notify = (text, type) => {
+    switch (type) {
+      case "success":
+        toast.success(text);
+        return;
+      case "failed":
+        toast.failed(text);
+        return;
+      default: return;
+    }
+  }
+  
   const handleOnPostMediaChange = async (e) => {
     const imageFile = e.target.files[0];
     if (Math.floor(imageFile / 1000000) > 3) {
@@ -63,9 +77,9 @@ const PostCard = ({ post, postOptions }) => {
           >
             {post?.firstName} {post?.lastName}
           </div>
-          <Link to={`/profile/${post?.username}/`} onClick={() => { console.log(post?.user_id); dispatch(changecurrentid(post?.user_id)); dispatch(getUser(currentId)); }} className="username text-left text-gray-500 underline">
+          <div onClick={() => { console.log(post?.user_id); dispatch(changecurrentid(post?.user_id)); dispatch(getUser(currentId)); }} className="username text-left text-gray-500 ">
             {post?.username}
-          </Link>
+          </div>
           
         </div>
         {postOptions ? (
@@ -94,6 +108,7 @@ const PostCard = ({ post, postOptions }) => {
                 deletePost(post._id, authToken);
                 dispatch(getAllPosts());
                 setPostOptionsVisible(!postOptionsVisible);
+                notify("Post Deleted", "success");
               }}
             >
               Delete post
@@ -140,7 +155,7 @@ const PostCard = ({ post, postOptions }) => {
             setNewPostContent(e.target.value);
             dispatch(getAllPosts());
           }}
-          placeholder={post?.content}
+          value={newPostContent}
         />
       ) : null}
       {editVisible ? (
@@ -155,6 +170,7 @@ const PostCard = ({ post, postOptions }) => {
             setNewPostContent("");
             dispatch(getAllPosts());
             setEditVisible(!editVisible);
+            notify("Post Saved", "success");
           }}
         >
           Save
@@ -164,11 +180,20 @@ const PostCard = ({ post, postOptions }) => {
         <span
           tabIndex={"1"}
           onClick={() => {
-            post?.likes?.likedBy?.some(
+            if (post?.likes?.likedBy?.some(
               (likedBy) => ownerData?.username === likedBy.username
-            )
-              ? dislikePost(post._id, authToken)
-              : likePost(post._id, authToken);
+            )) {
+              dislikePost(post._id, authToken);
+              dispatch(getPagedPosts({ pageNum }));
+              dispatch(getAllPosts);
+              notify("Post Disliked", "success");
+            }
+            else {
+              likePost(post._id, authToken);
+              dispatch(getPagedPosts({ pageNum }));
+              dispatch(getAllPosts);
+              notify("Post Liked", "success");
+            }
             dispatch(getAllPosts());
           }}
           className="like material-symbols-rounded ml-8 text-red-400  rounded-full"
@@ -198,17 +223,27 @@ const PostCard = ({ post, postOptions }) => {
         >
           {comments?.length}
         </div>
-        <span className="share material-symbols-rounded ml-8 text-sky-400  rounded-full">
+        <span className="share material-symbols-rounded ml-8 text-sky-400  rounded-full"
+        onClick={()=>{navigator.clipboard.writeText(
+          `https://fitgram-app.netlify.app/post/${post?.username}/${post._id}`
+        );notify("Post Link Copied", "success");}}>
           send
         </span>
         <span
           className="bookmark material-symbols-rounded ml-auto mr-8 text-green-400  rounded-full"
           onClick={() => {
-            bookmarked?.some(
+            if(bookmarked?.some(
               (bookmarkedPost) => bookmarkedPost?._id === post?._id
-            ) === true
-              ? removeFromBookmark(post?._id, authToken)
-              : addToBookmark(post?._id, authToken);
+            ) === true)
+            {
+              removeFromBookmark(post?._id, authToken)
+              notify("Bookmark Removed","success")
+            }
+            else {
+             addToBookmark(post?._id, authToken);
+             notify("Bookmark Added", "success"); 
+            }
+            
             dispatch(getBookmarks(authToken));
           }}
         >

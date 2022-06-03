@@ -6,11 +6,24 @@ import {  useDispatch,useSelector } from 'react-redux';
 import "./ConnectUserCard.css"
 import { followUser,unfollowUser } from '../../services';
 import { getOwner,getUser } from '../../services/userService';
+import { toast } from 'react-toastify';
 const ConnectUserCard = ({userdata}) => {
   const { themeObject } = useTheme();
   const dispatch = useDispatch();
   const { authToken,user } = useSelector((store) => store.auth);
   const { ownerData } = useSelector((store) => store.user);
+  const notify = (text, type) => {
+    switch (type) {
+      case "success":
+        toast.success(text);
+        return;
+      case "failed":
+        toast.failed(text);
+        return;
+      default:
+        return;
+    }
+  };
   return (
     <div className="connect-user-card__container m-4">
       <Link
@@ -44,11 +57,11 @@ const ConnectUserCard = ({userdata}) => {
       <div
         className="follow h-14 w-32 text-xl bg-gray-200 hover:bg-violet-500 cursor-pointer font-bold flex justify-center items-center rounded-full ml-auto"
         onClick={() => {
-          ownerData?.following?.some(
+          if (ownerData?.following?.some(
             (followingUser) => followingUser?._id === userdata?._id
-          )
-            ? unfollowUser(userdata?._id, authToken)
-            : followUser(userdata?._id, authToken);
+          )) { unfollowUser(userdata?._id, authToken); notify("User Unfollowed", "success"); }
+            
+          else { followUser(userdata?._id, authToken);notify("User Followed", "success"); }
           dispatch(getOwner(user?._id));
           dispatch(getUser(user?._id));
         }}

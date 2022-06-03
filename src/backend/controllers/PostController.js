@@ -79,19 +79,19 @@ export const createPostHandler = function (schema, request) {
     }
     const { postData } = JSON.parse(request.requestBody);
     const post = {
-      _id:uuid(),
-      user_id:user._id,
+      _id: uuid(),
+      user_id: user._id,
       ...postData,
       likes: {
         likeCount: 0,
         likedBy: [],
         dislikedBy: [],
       },
-      comments:[],
+      comments: [],
       username: user.username,
       firstName: user.firstName,
       lastName: user.lastName,
-      profilePicture:user.profilePicture,
+      profilePicture: user.profilePicture,
       createdAt: formatDate(),
       updatedAt: formatDate(),
     };
@@ -295,4 +295,13 @@ export const deletePostHandler = function (schema, request) {
       }
     );
   }
+};
+export const getLatestPagedPosts = function (schema, request) {
+  const { pageNum } = request.params;
+
+  const latestPosts = this.db.posts.sort(
+    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+  );
+  const paginatedPosts = latestPosts.slice(0, pageNum * 4 + 4);
+  return new Response(200, {}, { posts: paginatedPosts });
 };

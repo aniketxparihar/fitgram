@@ -53,7 +53,16 @@ const Sidebar = () => {
         <span className="material-symbols-rounded mr-4 ">bookmark</span>
         <div className="sidebar__link--text">Bookmarks</div>
       </Link>
-
+      <Link
+        to={"/connect-people"}
+        className="sidebar__link text-left text-xl font-bold flex rounded-3xl"
+        style={{
+          color: themeObject.text,
+        }}
+      >
+        <span className="material-symbols-rounded mr-4 ">group</span>
+        <div className="sidebar__link--text">Find People</div>
+      </Link>
       <Link
         to={`/profile/${user.username}/`}
         onClick={() => {

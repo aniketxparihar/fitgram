@@ -6,6 +6,7 @@ import { editUser, getUser } from "../../services";
 import { useDispatch, useSelector } from "react-redux";
 import { useredited } from "../../redux/UserSlice";
 import axios from "axios";
+import { toast } from "react-toastify";
 const EditProfileModal = ({ userdata }) => {
   const { themeObject } = useTheme();
   const { modalEditProfileVisible, setModalEditProfileVisible } = useModal();
@@ -13,7 +14,18 @@ const EditProfileModal = ({ userdata }) => {
   const [newPortfolio, setNewPortfolio] = useState(userdata?.link);
   const dispatch = useDispatch();
   const { authToken } = useSelector((store) => store.auth);
-
+  const notify = (text, type) => {
+  switch (type) {
+    case "success":
+      toast.success(text);
+      return;
+    case "failed":
+      toast.failed(text);
+      return;
+    default:
+      return;
+  }
+};
   const handleOnProfileImageChange = async (e) => {
     const imageFile = e.target.files[0];
     if (Math.floor(imageFile / 1000000) > 3) {
@@ -141,6 +153,7 @@ const EditProfileModal = ({ userdata }) => {
             );
             setModalEditProfileVisible("none");
             dispatch(useredited());
+             notify("Profile Saved", "success");
           }}
         >
           Save

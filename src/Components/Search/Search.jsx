@@ -28,6 +28,16 @@ const Search = () => {
         : null
     );
   }, [searchString]);
+  function debounce(func, timeout = 500) {
+    let timer;
+    return (...args) => {
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        func.apply(this, args);
+      }, timeout);
+    };
+  }
+  console.log(searchString)
   
   return (
     <div
@@ -47,9 +57,9 @@ const Search = () => {
         type="text"
         className="search rounded-full bg-transparent p-2 font-bold"
         placeholder="Search Fitme"
-        onChange={(e) => {
+        onChange={debounce((e) => {
           setSearchString(e.target.value);
-        }}
+        },600)}
       />
       {searchdata!==null? <SearchedUsers users={searchdata} /> : null}
     </div>
