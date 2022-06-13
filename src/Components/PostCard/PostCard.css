@@ -64,6 +64,6 @@
     height:10rem;
 }
 .edit-post__image{
-    height:20rem;
+    height:max-content;
     width:100%;filter: grayscale(60%);
 }
