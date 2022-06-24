@@ -10,7 +10,6 @@ import { getPagedPosts } from '../../services/postService';
 import "./PostCard.css"
 const PostCard = ({ post, postOptions }) => {
   
-  console.log(post)
   const { themeObject } = useTheme();
 
   const [postOptionsVisible, setPostOptionsVisible] = useState(false);
@@ -115,7 +114,7 @@ const PostCard = ({ post, postOptions }) => {
               className="post-settings--delete font-bold text-gray-50 rounded-b-xl hover:bg-violet-800 cursor-pointer"
               onClick={() => {
                 deletePost(post._id, authToken);
-                navigate("/")
+                navigate("/");
                 dispatch(getAllPosts());
                 setPostOptionsVisible(!postOptionsVisible);
                 notify("Post Deleted", "success");
@@ -136,9 +135,15 @@ const PostCard = ({ post, postOptions }) => {
       )}
       {editVisible ? (
         <div className="edit-post-media rounded-3xl cursor-pointer relative m-8">
-          <input type="file" className="image-input cursor-pointer" />
+          <input
+            type="file"
+            className="image-input cursor-pointer"
+            onChange={(e) => {
+              handleOnPostMediaChange(e)
+            }}
+          />
           <img
-            src={post?.media}
+            src={newPostMedia}
             alt=""
             className="edit-post__image rounded-3xl"
           />
@@ -166,7 +171,7 @@ const PostCard = ({ post, postOptions }) => {
           onChange={(e) => {
             setNewPostContent(e.target.value);
           }}
-          placeholder={`${post?.content}`}
+          value={newPostContent}
         />
       ) : null}
       {editVisible ? (

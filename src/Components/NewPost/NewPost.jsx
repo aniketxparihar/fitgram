@@ -16,7 +16,6 @@ const NewPost = () => {
   const [event, setEvent] = useState(null);
   const [chosenEmoji, setChosenEmoji] = useState(false);
   const onEmojiClick = (event, emojiObject) => {
-    console.log(emojiObject)
    setNewPostContent(()=>newPostContent+emojiObject.emoji)
    setChosenEmoji(!chosenEmoji);
  };
@@ -40,6 +39,7 @@ const NewPost = () => {
       .then((data) => {
         setNewPostMedia(data.url);
         setImageReceived(!imageReceived);
+        notify("Media uploaded...","success");
         setEvent(e);
       })
       .catch((err) => console.log(err));
@@ -86,6 +86,7 @@ const notify = (text, type) => {
             accept="image/*"
             className="media-input w-52 cursor-pointer"
             onChange={(e) => {
+              notify("Uploading media...","success")
               handleOnPostMediaChange(e);
             }}
             style={{

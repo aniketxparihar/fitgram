@@ -37,7 +37,6 @@ const Search = () => {
       }, timeout);
     };
   }
-  console.log(searchString)
   
   return (
     <div
